@@ -1,5 +1,34 @@
 {
+  "name": "digital_twin_temp_ciampino_unigis",
+  "version": "1.0.0",
+  "description": "by Denis Barcaroli",
+  "main": "script.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "cesium": "^1.124.0"
+    "@deck.gl/mapbox": "^9.0.38",
+    "deck.gl": "^9.0.38",
+    "mapbox-gl": "^3.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "browser-sync": "^3.0.3",
+    "css-loader": "^7.1.2",
+    "eslint-config-prettier": "^9.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "prettier": "^3.4.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack serve"
   }
 }
