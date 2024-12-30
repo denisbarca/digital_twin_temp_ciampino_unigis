@@ -1,6 +1,6 @@
-// filepath: /c:/Users/AMD/source/repos/digital_twin_temp_ciampino_unigis/webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.ts",
@@ -20,6 +20,10 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource"
       }
@@ -33,6 +37,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./src/index.html"),
       filename: "index.html"
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "src/assets", to: "assets" }]
     })
   ],
   devServer: {

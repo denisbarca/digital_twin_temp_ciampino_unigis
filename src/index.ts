@@ -1,31 +1,50 @@
-import {
-  Deck,
-  MapViewState,
-  ScatterplotLayer
-} from "../node_modules/deck.gl/dist/index";
-import { MapboxOverlay } from "@deck.gl/mapbox";
-import { Map } from "maplibre-gl";
+import "./style.scss";
+import maplibregl, { Map } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { BASEMAP_STYLE, latLong, ZOOM_LEVEL } from "./lib/utils";
+import { deckOverlay } from "./components/deck-overlay-control";
+import {
+  addLayerCiampino,
+  addSourceCiampino
+} from "./layers/ciampino-boundaries";
+import { geocoder } from "./components/geocoder-api-control";
+import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
+import { HomeControl } from "./components/home-custom-control";
+import { LayersControl } from "./components/layers-custom-control";
 
+// Create a new map instance
 const map = new Map({
   container: "map",
-  style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-  center: [0.45, 51.47],
-  zoom: 11
+  style: BASEMAP_STYLE,
+  center: latLong,
+  zoom: ZOOM_LEVEL
 });
 
-await map.once("load");
-
-const deckOverlay = new MapboxOverlay({
-  interleaved: true,
-  layers: [
-    new ScatterplotLayer({
-      id: "deckgl-circle",
-      data: [{ position: [0.45, 51.47] }],
-      getPosition: (d) => d.position,
-      beforeId: "watername_ocean" // In interleaved mode render the layer under map labels
-    })
-  ]
+// Loading map
+map.on("load", () => {
+  // Adding sources and layers on map
+  map.addSource(addSourceCiampino.id, addSourceCiampino.args);
+  map.addLayer(addLayerCiampino);
 });
 
+// Add navigation control (zoom buttons, compass, etc.)
+map.addControl(
+  new maplibregl.NavigationControl({
+    visualizePitch: true,
+    showZoom: true,
+    showCompass: true
+  }),
+  "top-left"
+);
+
+// Add geocodeer control from Nominatim OpenStreetMap API -> malibre-gl-geocoder plugin
+map.addControl(geocoder);
+
+// Add deck overlay for 3D rendering
 map.addControl(deckOverlay);
+
+// Add custom home control -> flyTo to initial position
+map.addControl(new HomeControl(), "top-left");
+
+// Add custom "Layers" control
+map.addControl(new LayersControl(), "top-right");
