@@ -1,18 +1,18 @@
 import { Map, IControl } from "maplibre-gl";
-
-export type LayerModel = {
-  id: string;
-  name: string;
-  symbol?: string;
-};
+import { LayerModel } from "../lib/models/layer-model";
+import { initialBasemap } from "../index";
+import { getLayersLegend } from "../layers/layers";
 
 // Define the custom "Layers" control
 export class LayersControl implements IControl {
   private map: Map | undefined;
   private container: HTMLElement | undefined;
+  private layers: LayerModel[] = [];
 
   onAdd(map: Map): HTMLElement {
     this.map = map;
+    console.log("onadd", initialBasemap);
+
     this.container = document.createElement("div");
     this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
     this.container.style.fontFamily =
@@ -28,14 +28,12 @@ export class LayersControl implements IControl {
     layerList.style.fontWeight = "bold";
     this.container.appendChild(layerList);
 
-    const layers: LayerModel[] = [
-      { id: "ciampino-boundaries", name: "Ciampino Boundaries" }
-      // Add more layers here if needed
-    ];
+    this.layers = getLayersLegend();
+    console.log(this.layers);
 
-    layers.forEach((layer) => {
+    this.layers.forEach((layer) => {
       const layerItem = document.createElement("div");
-      layerItem.style.marginTop = layer === layers[0] ? "20px" : "10px";
+      layerItem.style.marginTop = layer === this.layers[0] ? "20px" : "10px";
       layerItem.style.fontSize = "12px";
       layerItem.style.fontWeight = "normal";
       layerItem.style.display = "flex";
@@ -47,14 +45,17 @@ export class LayersControl implements IControl {
       layerInfo.style.alignItems = "center";
 
       const layerIcon = document.createElement("div");
-      layerIcon.style.width = "12px";
-      layerIcon.style.height = "12px";
-      layerIcon.style.backgroundColor = "red";
+      layerIcon.style.width = layer.symbol.width.toString() + "px";
+      layerIcon.style.height = layer.symbol.height.toString() + "px";
+      layerIcon.style.backgroundColor = "#000000";
       layerIcon.style.marginLeft = "10px";
 
       const checkbox = document.createElement("input");
+      checkbox.className = "layer-toggle";
       checkbox.type = "checkbox";
-      checkbox.checked = map.getLayer(layer.id) !== undefined;
+      checkbox.checked = true;
+      console.log("on add checked", checkbox.checked);
+
       checkbox.onchange = () => {
         if (checkbox.checked) {
           map.setLayoutProperty(layer.id, "visibility", "visible");
@@ -64,7 +65,6 @@ export class LayersControl implements IControl {
       };
       const label = document.createElement("label");
       label.textContent = layer.name;
-      // TODO: add icon symbol
       layerInfo.appendChild(checkbox);
       layerInfo.appendChild(label);
       layerItem.appendChild(layerInfo);
@@ -90,6 +90,28 @@ export class LayersControl implements IControl {
       (layerList as HTMLElement).style.display =
         (layerList as HTMLElement).style.display === "none" ? "block" : "none";
     }
+  }
+
+  updateLayerCheckboxes(): void {
+    if (!this.map || !this.container) {
+      console.log("Map or container not found");
+
+      this.onRemove();
+      this.onAdd(this.map as Map);
+    }
+
+    const checkboxes = Array.from(
+      this.container?.querySelectorAll<HTMLInputElement>(
+        "input.layer-toggle"
+      ) || []
+    );
+    checkboxes.forEach((checkbox, index) => {
+      const layer = this.layers[index];
+      if (layer) {
+        checkbox.checked = true;
+        console.log(checkbox);
+      }
+    });
   }
 
   private _applyResponsiveStyles(): void {

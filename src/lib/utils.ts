@@ -1,7 +1,7 @@
 import { LngLatLike } from "maplibre-gl";
-import { city } from "./models/city";
+import { City } from "./models/city";
 
-export const CIAMPINO_CITY: city = {
+export const CIAMPINO_CITY: City = {
   name: "Ciampino",
   latitude: 41.7994,
   longitude: 12.61

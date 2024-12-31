@@ -1,0 +1,13 @@
+export type LayerModel = {
+  id: string;
+  name: string;
+  symbol: LayerSymbol;
+  visible?: boolean;
+};
+
+export type LayerSymbol = {
+  type: "point" | "line" | "polygon";
+  width: number;
+  height: number;
+  color: string[];
+};
