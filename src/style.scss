@@ -1,41 +1,55 @@
 html,
-body,
-#map {
+body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-#map-widget-group-left {
-  display: block;
+#map {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  transform: translate(-50%);
-  background: white;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  font-size: 12px;
-  text-align: center;
-  color: black;
-  z-index: 2;
+  top: 60px; /* Adjust this value based on the height of your header */
+  bottom: 0;
+  width: 100%;
 }
 
-#fly {
-  display: block;
+header {
   position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%);
-  width: 50%;
-  height: 40px;
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  color: #fff;
-  background: #ee8a65;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 0 20px; /* Add padding for content */
+  z-index: 1;
 }
+
+#deck-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+// #map-widget-group-left {
+//   display: block;
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   transform: translate(-50%);
+//   background: white;
+//   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+//   border-radius: 4px;
+//   font-size: 12px;
+//   text-align: center;
+//   color: black;
+//   z-index: 2;
+// }

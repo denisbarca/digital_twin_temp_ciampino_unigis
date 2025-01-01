@@ -2,6 +2,7 @@ import { Map, IControl } from "maplibre-gl";
 import { LayerModel } from "../lib/models/layer-model";
 import { initialBasemap } from "../index";
 import { getLayersLegend } from "../layers/layers";
+import { defaultColorCiampino } from "../layers/ciampino-boundaries";
 
 // Define the custom "Layers" control
 export class LayersControl implements IControl {
@@ -47,15 +48,13 @@ export class LayersControl implements IControl {
       const layerIcon = document.createElement("div");
       layerIcon.style.width = layer.symbol.width.toString() + "px";
       layerIcon.style.height = layer.symbol.height.toString() + "px";
-      layerIcon.style.backgroundColor = "#000000";
+      layerIcon.style.backgroundColor = defaultColorCiampino;
       layerIcon.style.marginLeft = "10px";
 
       const checkbox = document.createElement("input");
       checkbox.className = "layer-toggle";
       checkbox.type = "checkbox";
       checkbox.checked = true;
-      console.log("on add checked", checkbox.checked);
-
       checkbox.onchange = () => {
         if (checkbox.checked) {
           map.setLayoutProperty(layer.id, "visibility", "visible");

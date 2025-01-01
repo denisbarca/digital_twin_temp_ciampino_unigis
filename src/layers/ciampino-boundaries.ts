@@ -789,13 +789,14 @@ export const addSourceCiampino = {
 };
 
 export const colorLayerCiampino = ["#FF0000", "#FF0000", "#000000"];
+export const defaultColorCiampino = colorLayerCiampino[1];
 
 export const addLayerCiampino: AddLayerObject = {
   id: "ciampino-boundaries",
   type: "line",
   source: addSourceCiampino.id,
   paint: {
-    "line-color": colorLayerCiampino[1],
+    "line-color": defaultColorCiampino,
     "line-width": 2, // 2px width
     "line-opacity": 1
   }
@@ -807,8 +808,6 @@ export const addLayerLegendCiampino: LayerModel[] = [
     name: "Ciampino Boundaries",
     symbol: {
       type: "line",
-      // width: 50,
-      // height: 6,
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayerCiampino

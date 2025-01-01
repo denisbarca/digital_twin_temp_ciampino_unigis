@@ -14,3 +14,10 @@ export const latLong: LngLatLike = [
   CIAMPINO_CITY.longitude,
   CIAMPINO_CITY.latitude
 ];
+
+export enum ControlsPosition {
+  TOP_LEFT = "top-left",
+  TOP_RIGHT = "top-right",
+  BOTTOM_LEFT = "bottom-left",
+  BOTTOM_RIGHT = "bottom-right"
+}

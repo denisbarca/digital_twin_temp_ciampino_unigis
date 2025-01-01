@@ -17,11 +17,7 @@ export const getLayerColor = (
   basemapName: string
 ): string => {
   const currBasemap: number = layersLegend.findIndex((baseLayer) => {
-    console.log("baseLayer", baseLayer.name, basemapName);
-
     return baseLayer.name === basemapName;
   });
-  console.log("currBasemap", currBasemap);
-
   return currBasemap >= 0 ? colors[currBasemap] : "#000000";
 };
