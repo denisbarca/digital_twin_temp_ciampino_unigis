@@ -1,6 +1,5 @@
 import { Map, IControl } from "maplibre-gl";
 import { LayerModel } from "../lib/models/layer-model";
-import { initialBasemap } from "../index";
 import { getLayersLegend } from "../layers/layers";
 import { defaultColorCiampino } from "../layers/ciampino-boundaries";
 
@@ -12,8 +11,6 @@ export class LayersControl implements IControl {
 
   onAdd(map: Map): HTMLElement {
     this.map = map;
-    console.log("onadd", initialBasemap);
-
     this.container = document.createElement("div");
     this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
     this.container.style.fontFamily =
@@ -30,8 +27,6 @@ export class LayersControl implements IControl {
     this.container.appendChild(layerList);
 
     this.layers = getLayersLegend();
-    console.log(this.layers);
-
     this.layers.forEach((layer) => {
       const layerItem = document.createElement("div");
       layerItem.style.marginTop = layer === this.layers[0] ? "20px" : "10px";
