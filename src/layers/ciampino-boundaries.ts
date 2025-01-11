@@ -788,8 +788,8 @@ export const addSourceCiampino = {
   }
 };
 
-export const colorLayerCiampino = ["#FF0000", "#FF0000", "#000000"];
-export const defaultColorCiampino = colorLayerCiampino[1];
+export const colorLayerCiampino = ["#FF0000"];
+export const defaultColorCiampino = colorLayerCiampino[0];
 
 export const addLayerCiampino: AddLayerObject = {
   id: "ciampino-boundaries",

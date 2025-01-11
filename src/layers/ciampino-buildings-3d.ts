@@ -6,6 +6,8 @@ import {
   SourceSpecification
 } from "maplibre-gl/dist/maplibre-gl";
 import { MAPTILER_API_KEY } from "../lib/utils";
+import { LayerModel } from "../lib/models/layer-model";
+import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 
 export class CiampinoBuildings3D {
   // Insert the layer beneath any symbol layer.
@@ -33,24 +35,27 @@ export const addSourceBuildings3D = {
   }
 };
 
+export const colorLayer3DBuildings = ["#D3D3D3", "#ADD8E6", "#0000FF"];
+
 export const addLayerBuildings3D: AddLayerObject = {
   id: "3d-buildings",
   source: "openmaptiles",
   "source-layer": "building",
   type: "fill-extrusion",
   minzoom: 15,
-  filter: ["!=", ["get", "hide_3d"], true],
+  filter: ["!=", "hide_3d", true],
   paint: {
     "fill-extrusion-color": [
       "interpolate",
       ["linear"],
       ["get", "render_height"],
       0,
-      "lightgray",
-      200,
-      "royalblue",
-      400,
-      "lightblue"
+      // colorLayer3DBuildings[0], // Light gray -> from 0 to 10m
+      colorLayer3DBuildings[0], // Light gray -> from 0 to 10m
+      10,
+      colorLayer3DBuildings[1], // Light blue -> from 10 to 20m
+      20,
+      colorLayer3DBuildings[2] // Blue -> above 20m
     ],
     "fill-extrusion-height": [
       "interpolate",
@@ -69,3 +74,16 @@ export const addLayerBuildings3D: AddLayerObject = {
     ]
   }
 };
+
+export const addLayerLegend3DBuildings: LayerModel[] = [
+  {
+    id: "3d-buildings",
+    name: "Buildings (0 - 20+ meters)",
+    symbol: {
+      type: "line",
+      width: mapLayerWidth["line"],
+      height: mapLayerHeight["line"],
+      color: colorLayer3DBuildings
+    }
+  }
+];

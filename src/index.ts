@@ -37,17 +37,17 @@ const addSourcesAndLayers = () => {
   const layerLabelId = CiampinoBuildings3D.insertLayerBeneath(map);
 
   // Adding sources and layers on map
-  if (!map.getSource(addSourceBuildings3D.id)) {
-    map.addSource(addSourceBuildings3D.id, addSourceBuildings3D.args);
-  }
-  if (!map.getLayer(addLayerBuildings3D.id)) {
-    map.addLayer(addLayerBuildings3D, layerLabelId);
-  }
   if (!map.getSource(addSourceCiampino.id)) {
     map.addSource(addSourceCiampino.id, addSourceCiampino.args);
   }
   if (!map.getLayer(addLayerCiampino.id)) {
     map.addLayer(addLayerCiampino);
+  }
+  if (!map.getSource(addSourceBuildings3D.id)) {
+    map.addSource(addSourceBuildings3D.id, addSourceBuildings3D.args);
+  }
+  if (!map.getLayer(addLayerBuildings3D.id)) {
+    map.addLayer(addLayerBuildings3D, layerLabelId);
   }
 };
 //#endregion

@@ -1,7 +1,6 @@
 import { Map, IControl } from "maplibre-gl";
 import { LayerModel } from "../lib/models/layer-model";
 import { getLayersLegend } from "../layers/layers";
-import { defaultColorCiampino } from "../layers/ciampino-boundaries";
 
 // Define the custom "Layers" control
 export class LayersControl implements IControl {
@@ -29,7 +28,7 @@ export class LayersControl implements IControl {
     this.layers = getLayersLegend();
     this.layers.forEach((layer) => {
       const layerItem = document.createElement("div");
-      layerItem.style.marginTop = layer === this.layers[0] ? "20px" : "10px";
+      layerItem.style.marginTop = "20px";
       layerItem.style.fontSize = "12px";
       layerItem.style.fontWeight = "normal";
       layerItem.style.display = "flex";
@@ -43,8 +42,11 @@ export class LayersControl implements IControl {
       const layerIcon = document.createElement("div");
       layerIcon.style.width = layer.symbol.width.toString() + "px";
       layerIcon.style.height = layer.symbol.height.toString() + "px";
-      layerIcon.style.backgroundColor = defaultColorCiampino;
-      layerIcon.style.marginLeft = "10px";
+      layerIcon.style.background = this._createGradientBackground(
+        layer.symbol.color
+      );
+
+      layerIcon.style.marginLeft = "5px";
 
       const checkbox = document.createElement("input");
       checkbox.className = "layer-toggle";
@@ -78,14 +80,6 @@ export class LayersControl implements IControl {
     window.addEventListener("resize", this._applyResponsiveStyles.bind(this));
   }
 
-  private _toggleLayerList(): void {
-    const layerList = this.container?.querySelector(".layer-list");
-    if (layerList) {
-      (layerList as HTMLElement).style.display =
-        (layerList as HTMLElement).style.display === "none" ? "block" : "none";
-    }
-  }
-
   updateLayerCheckboxes(): void {
     if (!this.map || !this.container) {
       console.log("Map or container not found");
@@ -106,6 +100,25 @@ export class LayersControl implements IControl {
         console.log(checkbox);
       }
     });
+  }
+
+  private _toggleLayerList(): void {
+    const layerList = this.container?.querySelector(".layer-list");
+    if (layerList) {
+      (layerList as HTMLElement).style.display =
+        (layerList as HTMLElement).style.display === "none" ? "block" : "none";
+    }
+  }
+
+  private _createGradientBackground(colors: string[]): string {
+    if (colors.length === 1) {
+      return colors[0];
+    }
+    const gradientStops = colors.map((color, index) => {
+      const percentage = (index / (colors.length - 1)) * 100;
+      return `${color} ${percentage}%`;
+    });
+    return `linear-gradient(90deg, ${gradientStops.join(", ")})`;
   }
 
   private _applyResponsiveStyles(): void {
