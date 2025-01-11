@@ -1,29 +1,37 @@
 import { Map, IControl } from "maplibre-gl";
 import { Basemap } from "../lib/models/basemap";
-import positronImage from "../assets/images/positron.png";
-import darkMatterImage from "../assets/images/dark_matter.png";
-import voyagerImage from "../assets/images/voyager.png";
+import { MAPTILER_API_KEY } from "../lib/utils";
+import basicV2Image from "../assets/images/basic-v2.png";
+import basicV2DarkImage from "../assets/images/basic-v2-dark.png";
+import hybridImage from "../assets/images/hybrid.png";
+import openstreetmapImage from "../assets/images/openstreetmap.png";
 
-const cartoPositron: Basemap = {
-  name: "Positron",
-  url: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-  image: positronImage
+const basicV2: Basemap = {
+  name: "BasicV2",
+  url: `https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPTILER_API_KEY}`,
+  image: basicV2Image
 };
-const cartoDarkMatter: Basemap = {
-  name: "Dark Matter",
-  url: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-  image: darkMatterImage
+const basicV2Dark: Basemap = {
+  name: "BasicV2 Dark",
+  url: `https://api.maptiler.com/maps/basic-v2-dark/style.json?key=${MAPTILER_API_KEY}`,
+  image: basicV2DarkImage
 };
-const cartoVoyager: Basemap = {
-  name: "Voyager",
-  url: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-  image: voyagerImage
+const openStreetMap: Basemap = {
+  name: "OpenStreetMap",
+  url: `https://api.maptiler.com/maps/openstreetmap/style.json?key=${MAPTILER_API_KEY}`,
+  image: openstreetmapImage
+};
+const satellite: Basemap = {
+  name: "Satellite",
+  url: `https://api.maptiler.com/maps/hybrid/style.json?key=${MAPTILER_API_KEY}`,
+  image: hybridImage
 };
 
 export const baseLayers: Basemap[] = [
-  cartoPositron,
-  cartoDarkMatter,
-  cartoVoyager
+  basicV2,
+  basicV2Dark,
+  openStreetMap,
+  satellite
 ];
 
 export interface BasemapControlOptions {

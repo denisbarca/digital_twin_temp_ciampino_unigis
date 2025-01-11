@@ -21,3 +21,5 @@ export enum ControlsPosition {
   BOTTOM_LEFT = "bottom-left",
   BOTTOM_RIGHT = "bottom-right"
 }
+
+export const MAPTILER_API_KEY = "7hoRtEm5V28kPFvvHRho";
