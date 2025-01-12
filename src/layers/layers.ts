@@ -1,10 +1,12 @@
 import { LayerModel } from "../lib/models/layer-model";
 import { addLayerLegendCiampino } from "./ciampino-boundaries";
 import { addLayerLegend3DBuildings } from "./ciampino-buildings-3d";
+import { addLayerLegend3DTrees } from "./ciampino-trees-3d";
 
 const layersLegend: LayerModel[] = [
   ...addLayerLegendCiampino,
-  ...addLayerLegend3DBuildings
+  ...addLayerLegend3DBuildings,
+  ...addLayerLegend3DTrees
 ];
 
 export const getLayerLegend = (id: string): LayerModel | undefined => {

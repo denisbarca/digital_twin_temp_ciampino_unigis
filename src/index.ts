@@ -1,5 +1,5 @@
 import "./style.scss";
-import maplibregl from "maplibre-gl";
+import maplibregl, { Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { CIAMPINO_CITY, ControlsPosition, ZOOM_LEVEL } from "./lib/utils";
 import {
@@ -17,6 +17,7 @@ import {
   CiampinoBuildings3D
 } from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
+import { addLayerTrees3D, addSourceTrees3D } from "./layers/ciampino-trees-3d";
 
 // #region Map initialization
 
@@ -48,6 +49,12 @@ const addSourcesAndLayers = () => {
   }
   if (!map.getLayer(addLayerBuildings3D.id)) {
     map.addLayer(addLayerBuildings3D, layerLabelId);
+  }
+  if (!map.getSource(addSourceTrees3D.id)) {
+    map.addSource(addSourceTrees3D.id, addSourceTrees3D.args);
+  }
+  if (!map.getLayer(addLayerBuildings3D.id)) {
+    map.addLayer(addLayerTrees3D);
   }
 };
 //#endregion
@@ -98,4 +105,20 @@ map.addControl(
 );
 // #endregion
 
-// Add deck overlay for 3D rendering
+// Add click event listener for buildings layer
+map.on("click", "3d-buildings", (e) => {
+  const features = map.queryRenderedFeatures(e.point, {
+    layers: ["3d-buildings"]
+  });
+  if (features.length) {
+    const feature = features[0];
+    const description = `
+      <strong>Building ID:</strong> ${feature.id}<br>
+      <strong>Height:</strong> ${feature.properties.render_height} meters
+    `;
+    new Popup()
+      .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
+      .setHTML(description)
+      .addTo(map);
+  }
+});
