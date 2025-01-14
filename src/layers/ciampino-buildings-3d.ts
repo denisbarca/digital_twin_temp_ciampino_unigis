@@ -11,20 +11,6 @@ import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 
 export class CiampinoBuildings3D {
   // Insert the layer beneath any symbol layer.
-  static insertLayerBeneath(map: maplibregl.Map): string | undefined {
-    const layers = map?.getStyle().layers;
-
-    let labelLayerId;
-    if (layers) {
-      for (let i = 0; i < layers.length; i++) {
-        if (layers[i].type === "symbol" && layers[i].layout) {
-          labelLayerId = layers[i].id;
-          break;
-        }
-      }
-      return labelLayerId;
-    }
-  }
 }
 
 export const addSourceBuildings3D = {

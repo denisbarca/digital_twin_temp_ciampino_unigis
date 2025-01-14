@@ -26,8 +26,16 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource"
+      },
+      {
+        test: /\.geojson$/,
+        use: "file-loader"
       }
     ]
+  },
+  devtool: "source-map",
+  devServer: {
+    contentBase: "./dist"
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -39,7 +47,10 @@ module.exports = {
       filename: "index.html"
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: "src/assets", to: "assets" }]
+      patterns: [
+        { from: "src/assets", to: "assets" },
+        { from: "src/assets/layers", to: "assets/layers" }
+      ]
     })
   ],
   devServer: {

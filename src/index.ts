@@ -13,11 +13,19 @@ import { LayersControl } from "./components/layers-custom-control";
 import { baseLayers, BasemapControl } from "./components/basemap-control";
 import {
   addLayerBuildings3D,
-  addSourceBuildings3D,
-  CiampinoBuildings3D
+  addSourceBuildings3D
 } from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { addLayerTrees3D, addSourceTrees3D } from "./layers/ciampino-trees-3d";
+import {
+  addLayerCiampinoLanduse,
+  addSourceCiampinoLanduse
+} from "./layers/ciampino-landuse";
+import { insertLayerBeneath } from "./layers/layers";
+import {
+  addLayerCiampinoTrees,
+  addSourceCiampinoTrees
+} from "./layers/ciampino-trees";
 
 // #region Map initialization
 
@@ -34,28 +42,34 @@ const map = new maplibregl.Map({
 //#region Utils
 // Function to add sources and layers to the map
 const addSourcesAndLayers = () => {
-  // Insert layer beneath labels
-  const layerLabelId = CiampinoBuildings3D.insertLayerBeneath(map);
+  const sourcesAndLayers = [
+    { source: addSourceCiampino, layer: addLayerCiampino },
+    {
+      source: addSourceBuildings3D,
+      layer: addLayerBuildings3D,
+      beneath: insertLayerBeneath(map)
+    },
+    { source: addSourceTrees3D, layer: addLayerTrees3D },
+    {
+      source: addSourceCiampinoLanduse,
+      layer: addLayerCiampinoLanduse,
+      beneath: insertLayerBeneath(map)
+    },
+    {
+      source: addSourceCiampinoTrees,
+      layer: addLayerCiampinoTrees,
+      beneath: insertLayerBeneath(map)
+    }
+  ];
 
-  // Adding sources and layers on map
-  if (!map.getSource(addSourceCiampino.id)) {
-    map.addSource(addSourceCiampino.id, addSourceCiampino.args);
-  }
-  if (!map.getLayer(addLayerCiampino.id)) {
-    map.addLayer(addLayerCiampino);
-  }
-  if (!map.getSource(addSourceBuildings3D.id)) {
-    map.addSource(addSourceBuildings3D.id, addSourceBuildings3D.args);
-  }
-  if (!map.getLayer(addLayerBuildings3D.id)) {
-    map.addLayer(addLayerBuildings3D, layerLabelId);
-  }
-  if (!map.getSource(addSourceTrees3D.id)) {
-    map.addSource(addSourceTrees3D.id, addSourceTrees3D.args);
-  }
-  if (!map.getLayer(addLayerBuildings3D.id)) {
-    map.addLayer(addLayerTrees3D);
-  }
+  sourcesAndLayers.forEach(({ source, layer, beneath }) => {
+    if (!map.getSource(source.id)) {
+      map.addSource(source.id, source.args);
+    }
+    if (!map.getLayer(layer.id)) {
+      map.addLayer(layer, beneath);
+    }
+  });
 };
 //#endregion
 
@@ -68,6 +82,26 @@ map.on("load", () => {
 // #region Listen for basemap changes and reload layers
 map.on("styledata", () => {
   addSourcesAndLayers();
+});
+// #endregion
+
+// #region Interaction with map for popup
+// Add click event listener for buildings layer
+map.on("click", "3d-buildings", (e) => {
+  const features = map.queryRenderedFeatures(e.point, {
+    layers: ["3d-buildings"]
+  });
+  if (features.length) {
+    const feature = features[0];
+    const description = `
+      <strong>Building ID:</strong> ${feature.id}<br>
+      <strong>Height:</strong> ${feature.properties.render_height} meters
+    `;
+    new Popup()
+      .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
+      .setHTML(description)
+      .addTo(map);
+  }
 });
 // #endregion
 
@@ -104,21 +138,3 @@ map.addControl(
   ControlsPosition.BOTTOM_RIGHT
 );
 // #endregion
-
-// Add click event listener for buildings layer
-map.on("click", "3d-buildings", (e) => {
-  const features = map.queryRenderedFeatures(e.point, {
-    layers: ["3d-buildings"]
-  });
-  if (features.length) {
-    const feature = features[0];
-    const description = `
-      <strong>Building ID:</strong> ${feature.id}<br>
-      <strong>Height:</strong> ${feature.properties.render_height} meters
-    `;
-    new Popup()
-      .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
-      .setHTML(description)
-      .addTo(map);
-  }
-});
