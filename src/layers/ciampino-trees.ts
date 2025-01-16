@@ -15,7 +15,7 @@ export const addSourceCiampinoTrees = {
   }
 };
 
-export const colorLayerCiampino = ["#888888"];
+export const colorLayerCiampino = ["#228B22"];
 export const defaultColorCiampino = colorLayerCiampino[0];
 
 export const addLayerCiampinoTrees: AddLayerObject = {

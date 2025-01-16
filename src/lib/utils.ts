@@ -1,4 +1,4 @@
-import { LngLatLike } from "maplibre-gl";
+import { LngLatLike, Popup } from "maplibre-gl";
 import { City } from "./models/city";
 
 export const CIAMPINO_CITY: City = {
@@ -24,25 +24,22 @@ export enum ControlsPosition {
 
 export const MAPTILER_API_KEY = "7hoRtEm5V28kPFvvHRho";
 
-// export const computeBoundingBox = (coordinates: Coordinate[]) => {
-//   // Initialize bounds with first coordinate
-//   const bounds = {
-//     minLng: coordinates[0][0],
-//     maxLng: coordinates[0][0],
-//     minLat: coordinates[0][1],
-//     maxLat: coordinates[0][1]
-//   };
-
-//   // Find min and max values
-//   coordinates.forEach(([lng, lat]) => {
-//     bounds.minLng = Math.min(bounds.minLng, lng);
-//     bounds.maxLng = Math.max(bounds.maxLng, lng);
-//     bounds.minLat = Math.min(bounds.minLat, lat);
-//     bounds.maxLat = Math.max(bounds.maxLat, lat);
-//   });
-
-//   return {
-//     southwest: [bounds.minLng, bounds.minLat] as Coordinate,
-//     northeast: [bounds.maxLng, bounds.maxLat] as Coordinate
-//   };
-// };
+export const addClickListener = (
+  map: maplibregl.Map,
+  layerId: string,
+  getDescription: (feature: maplibregl.MapGeoJSONFeature) => string
+) => {
+  map.on("click", layerId, (e) => {
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: [layerId]
+    });
+    if (features.length) {
+      const feature = features[0];
+      const description = getDescription(feature);
+      new Popup()
+        .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
+        .setHTML(description)
+        .addTo(map);
+    }
+  });
+};

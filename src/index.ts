@@ -1,7 +1,12 @@
 import "./style.scss";
-import maplibregl, { Popup } from "maplibre-gl";
+import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { CIAMPINO_CITY, ControlsPosition, ZOOM_LEVEL } from "./lib/utils";
+import {
+  addClickListener,
+  CIAMPINO_CITY,
+  ControlsPosition,
+  ZOOM_LEVEL
+} from "./lib/utils";
 import {
   addLayerCiampino,
   addSourceCiampino
@@ -16,12 +21,10 @@ import {
   addSourceBuildings3D
 } from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import { addLayerTrees3D, addSourceTrees3D } from "./layers/ciampino-trees-3d";
 import {
   addLayerCiampinoLanduse,
   addSourceCiampinoLanduse
 } from "./layers/ciampino-landuse";
-import { insertLayerBeneath } from "./layers/layers";
 import {
   addLayerCiampinoTrees,
   addSourceCiampinoTrees
@@ -44,29 +47,17 @@ const map = new maplibregl.Map({
 const addSourcesAndLayers = () => {
   const sourcesAndLayers = [
     { source: addSourceCiampino, layer: addLayerCiampino },
-    {
-      source: addSourceBuildings3D,
-      layer: addLayerBuildings3D,
-      beneath: insertLayerBeneath(map)
-    },
-    { source: addSourceTrees3D, layer: addLayerTrees3D },
-    {
-      source: addSourceCiampinoLanduse,
-      layer: addLayerCiampinoLanduse,
-      beneath: insertLayerBeneath(map)
-    },
-    {
-      source: addSourceCiampinoTrees,
-      layer: addLayerCiampinoTrees,
-      beneath: insertLayerBeneath(map)
-    }
+    { source: addSourceBuildings3D, layer: addLayerBuildings3D },
+    { source: addSourceCiampinoLanduse, layer: addLayerCiampinoLanduse },
+    { source: addSourceCiampinoTrees, layer: addLayerCiampinoTrees }
   ];
 
-  sourcesAndLayers.forEach(({ source, layer, beneath }) => {
+  sourcesAndLayers.forEach(({ source, layer }) => {
     if (!map.getSource(source.id)) {
       map.addSource(source.id, source.args);
     }
     if (!map.getLayer(layer.id)) {
+      const beneath = map.getLayer("3d-buildings") ? "3d-buildings" : undefined;
       map.addLayer(layer, beneath);
     }
   });
@@ -87,22 +78,34 @@ map.on("styledata", () => {
 
 // #region Interaction with map for popup
 // Add click event listener for buildings layer
-map.on("click", "3d-buildings", (e) => {
-  const features = map.queryRenderedFeatures(e.point, {
-    layers: ["3d-buildings"]
-  });
-  if (features.length) {
-    const feature = features[0];
-    const description = `
-      <strong>Building ID:</strong> ${feature.id}<br>
-      <strong>Height:</strong> ${feature.properties.render_height} meters
-    `;
-    new Popup()
-      .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
-      .setHTML(description)
-      .addTo(map);
-  }
-});
+addClickListener(
+  map,
+  "3d-buildings",
+  (feature) => `
+  <strong>Building ID:</strong> ${feature.id}<br>
+  <strong>Height:</strong> ${feature.properties.render_height} meters
+`
+);
+
+// Add click event listener for landuse layer
+addClickListener(
+  map,
+  "ciampino-landuse",
+  (feature) => `
+  <strong>Landuse Class:</strong> ${feature.properties.class_2018}<br>
+  <strong>Area:</strong> ${feature.properties.area.toFixed(2)} sq. meters
+`
+);
+
+// Add click event listener for trees layer
+addClickListener(
+  map,
+  "3d-trees",
+  (feature) => `
+  <strong>Tree ID:</strong> ${feature.id}<br>
+  <strong>Height:</strong> ${feature.properties.height} meters
+`
+);
 // #endregion
 
 // #region Controls top-left
