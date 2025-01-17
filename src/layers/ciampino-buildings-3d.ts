@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import {
   AddLayerObject,
   CanvasSourceSpecification,
@@ -8,6 +6,7 @@ import {
 import { MAPTILER_API_KEY } from "../lib/utils";
 import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
+// import ciampinoBoundaries from "../assets/layers/ciampino_boundaries.geojson";
 
 export const sourceBuildings3D = {
   id: "openmaptiles",
@@ -25,14 +24,17 @@ export const layerBuildings3D: AddLayerObject = {
   "source-layer": "building",
   type: "fill-extrusion",
   minzoom: 15,
-  filter: ["!=", "hide_3d", true],
+  filter: [
+    "all",
+    ["!=", "hide_3d", true]
+    // ["in", ciampinoBoundaries?.features[0].geometry.coordinates[0][0][0]]
+  ],
   paint: {
     "fill-extrusion-color": [
       "interpolate",
       ["linear"],
       ["get", "render_height"],
       0,
-      // colorLayer3DBuildings[0], // Light gray -> from 0 to 10m
       colorLayer3DBuildings[0], // Light gray -> from 0 to 10m
       10,
       colorLayer3DBuildings[1], // Light blue -> from 10 to 20m

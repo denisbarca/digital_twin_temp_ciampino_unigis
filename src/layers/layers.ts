@@ -10,7 +10,10 @@ const layersLegend: LayerModel[] = [
 ];
 
 export const getLayerLegend = (id: string): LayerModel | undefined => {
-  return layersLegend.find((layer) => layer.id === id);
+  return layersLegend.find((layer) => {
+    // Check if id matches single or array of ids
+    return Array.isArray(layer.id) ? layer.id.includes(id) : layer.id === id;
+  });
 };
 
 export const getLayersLegend = (): LayerModel[] => {

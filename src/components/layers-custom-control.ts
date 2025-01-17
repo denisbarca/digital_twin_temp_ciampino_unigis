@@ -5,10 +5,13 @@ import { colorMapping } from "../layers/ciampino-landuse";
 
 // Define the custom "Layers" control
 export class LayersControl implements IControl {
+  // #region Variables
   private map: Map | undefined;
   private container: HTMLElement | undefined;
   private layers: LayerModel[] = [];
+  // #endregion
 
+  // #region Methods implementd
   onAdd(map: Map): HTMLElement {
     this.map = map;
     this.container = this._setContainer();
@@ -33,8 +36,9 @@ export class LayersControl implements IControl {
     this.map = undefined;
     window.addEventListener("resize", this._applyResponsiveStyles.bind(this));
   }
+  // #endregion
 
-  // Set container
+  // #region Legend container
   private _setContainer(): HTMLElement {
     this.container = document.createElement("div");
     this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
@@ -44,8 +48,9 @@ export class LayersControl implements IControl {
     this.container.style.padding = "10px";
     return this.container;
   }
+  // #endregion
 
-  // Set legend title
+  // #region Legend title
   private _setLayerList(): HTMLDivElement {
     const layerList = document.createElement("div");
     layerList.className = "layer-list";
@@ -55,8 +60,9 @@ export class LayersControl implements IControl {
     layerList.style.fontWeight = "bold";
     return layerList;
   }
+  // #endregion
 
-  // Set legend row
+  // #region Legend item/row
   private _setLayerItem(layer: LayerModel): HTMLDivElement {
     const layerItem = this._setLayerItemContainer();
     if (layer.hasSubClass) {
@@ -130,11 +136,8 @@ export class LayersControl implements IControl {
     checkbox.type = "checkbox";
     checkbox.checked = true;
     checkbox.onchange = () => {
-      if (checkbox.checked) {
-        map.setLayoutProperty(layer.id, "visibility", "visible");
-      } else {
-        map.setLayoutProperty(layer.id, "visibility", "none");
-      }
+      if (checkbox.checked) this._setVisibilityLogic(map, layer.id, "visible");
+      else this._setVisibilityLogic(map, layer.id, "none");
     };
     return checkbox;
   }
@@ -147,6 +150,7 @@ export class LayersControl implements IControl {
     return landuseTitle;
   }
 
+  // Set item with subclasses
   private _setSubClassItem(
     className: keyof typeof colorMapping
   ): HTMLDivElement {
@@ -167,6 +171,22 @@ export class LayersControl implements IControl {
     classItem.appendChild(classColor);
     classItem.appendChild(classLabel);
     return classItem;
+  }
+  // #endregion
+
+  // #region Utils
+  private _setVisibilityLogic(
+    map: Map,
+    id: string[] | string,
+    visibility: "visible" | "none"
+  ): void {
+    if (Array.isArray(id)) {
+      id.forEach((x) => {
+        map.setLayoutProperty(x, "visibility", visibility);
+      });
+    } else {
+      map.setLayoutProperty(id, "visibility", visibility);
+    }
   }
 
   private _createGradientBackground(colors: string[]): string {
@@ -189,6 +209,7 @@ export class LayersControl implements IControl {
       }
     }
   }
+  // #endregion
 }
 
 // updateLayerCheckboxes(): void {

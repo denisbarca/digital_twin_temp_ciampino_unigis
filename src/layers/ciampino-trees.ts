@@ -23,7 +23,8 @@ export const layerCiampinoTrees: AddLayerObject = {
   type: "circle",
   source: sourceCiampinoTrees.id,
   paint: {
-    "circle-color": defaultColorCiampino
+    "circle-color": defaultColorCiampino,
+    "circle-radius": 3
   },
   layout: {
     visibility: "visible"
@@ -32,7 +33,7 @@ export const layerCiampinoTrees: AddLayerObject = {
 
 export const layerLegendCiampinoTrees: LayerModel[] = [
   {
-    id: "ciampino-trees-2d",
+    id: ["ciampino-trees-2d", "ciampino-trees-3d"],
     name: "Ciampino Trees",
     symbol: {
       type: "line",

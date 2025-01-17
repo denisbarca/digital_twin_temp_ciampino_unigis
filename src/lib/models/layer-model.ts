@@ -1,5 +1,5 @@
 export type LayerModel = {
-  id: string;
+  id: string | string[];
   name: string;
   symbol: LayerSymbol;
   hasSubClass: boolean;
