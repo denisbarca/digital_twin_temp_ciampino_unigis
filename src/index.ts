@@ -7,24 +7,22 @@ import {
   ControlsPosition,
   ZOOM_LEVEL
 } from "./lib/utils";
-import {
-  addLayerCiampino,
-  addSourceCiampino
-} from "./layers/ciampino-boundaries";
+import { layerCiampino, sourceCiampino } from "./layers/ciampino-boundaries";
 import { geocoder } from "./components/geocoder-api-control";
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 import { HomeControl } from "./components/home-custom-control";
 import { LayersControl } from "./components/layers-custom-control";
 import { baseLayers, BasemapControl } from "./components/basemap-control";
 import {
-  addLayerBuildings3D,
-  addSourceBuildings3D
+  layerBuildings3D,
+  sourceBuildings3D
 } from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import {
-  addLayerCiampinoTrees,
-  addSourceCiampinoTrees
+  layerCiampinoTrees,
+  sourceCiampinoTrees
 } from "./layers/ciampino-trees";
+import { layerTrees3D } from "./layers/ciampino-trees-3d";
 
 // #region Map initialization
 
@@ -42,9 +40,10 @@ const map = new maplibregl.Map({
 // Function to add sources and layers to the map
 const addSourcesAndLayers = () => {
   const sourcesAndLayers = [
-    { source: addSourceCiampino, layer: addLayerCiampino },
-    { source: addSourceBuildings3D, layer: addLayerBuildings3D },
-    { source: addSourceCiampinoTrees, layer: addLayerCiampinoTrees }
+    { source: sourceCiampino, layer: layerCiampino },
+    { source: sourceBuildings3D, layer: layerBuildings3D },
+    { source: sourceCiampinoTrees, layer: layerCiampinoTrees },
+    { source: sourceCiampinoTrees, layer: layerTrees3D }
   ];
 
   sourcesAndLayers.forEach(({ source, layer }) => {
@@ -71,6 +70,19 @@ map.on("styledata", () => {
 });
 // #endregion
 
+// #region Listen for change in zoom level
+map.on("zoom", () => {
+  const zoom = map.getZoom();
+  if (zoom >= 15) {
+    map.setLayoutProperty("ciampino-trees-2d", "visibility", "none");
+    map.setLayoutProperty("ciampino-trees-3d", "visibility", "visible");
+  } else {
+    map.setLayoutProperty("ciampino-trees-2d", "visibility", "visible");
+    map.setLayoutProperty("ciampino-trees-3d", "visibility", "none");
+  }
+});
+// #endregion
+
 // #region Interaction with map for popup
 // Add click event listener for buildings layer
 addClickListener(
@@ -85,9 +97,17 @@ addClickListener(
 // Add click event listener for trees layer
 addClickListener(
   map,
-  "3d-trees",
+  "ciampino-trees-2d",
   (feature) => `
-  <strong>Tree ID:</strong> ${feature.id}<br>
+  <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+  <strong>Height:</strong> ${feature.properties.height} meters
+`
+);
+addClickListener(
+  map,
+  "ciampino-trees-3d",
+  (feature) => `
+  <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
   <strong>Height:</strong> ${feature.properties.height} meters
 `
 );

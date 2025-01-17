@@ -7,7 +7,7 @@ import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 import landusePolygons from "../assets/layers/landuse_polygons.geojson";
 
-export const addSourceCiampinoLanduse = {
+export const sourceCiampinoLanduse = {
   id: "ciampino-landuse-source",
   args: <SourceSpecification | CanvasSourceSpecification>{
     type: "geojson",
@@ -40,10 +40,10 @@ export const colorMapping = {
   Forests: "#8B4513" // Saddle Brown
 };
 
-export const addLayerCiampinoLanduse: AddLayerObject = {
+export const layerCiampinoLanduse: AddLayerObject = {
   id: "ciampino-landuse",
   type: "fill",
-  source: addSourceCiampinoLanduse.id,
+  source: sourceCiampinoLanduse.id,
   paint: {
     "fill-color": [
       "match",
@@ -98,7 +98,7 @@ export const addLayerCiampinoLanduse: AddLayerObject = {
   }
 };
 
-export const addLayerLegendCiampinoLanduse: LayerModel[] = [
+export const layerLegendCiampinoLanduse: LayerModel[] = [
   {
     id: "ciampino-landuse",
     name: "Ciampino Landuse",

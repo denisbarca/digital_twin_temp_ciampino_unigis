@@ -7,7 +7,7 @@ import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 import trees from "../assets/layers/trees.geojson";
 
-export const addSourceCiampinoTrees = {
+export const sourceCiampinoTrees = {
   id: "ciampino-trees-source",
   args: <SourceSpecification | CanvasSourceSpecification>{
     type: "geojson",
@@ -18,18 +18,21 @@ export const addSourceCiampinoTrees = {
 export const colorLayerCiampino = ["#228B22"];
 export const defaultColorCiampino = colorLayerCiampino[0];
 
-export const addLayerCiampinoTrees: AddLayerObject = {
-  id: "ciampino-trees",
+export const layerCiampinoTrees: AddLayerObject = {
+  id: "ciampino-trees-2d",
   type: "circle",
-  source: addSourceCiampinoTrees.id,
+  source: sourceCiampinoTrees.id,
   paint: {
     "circle-color": defaultColorCiampino
+  },
+  layout: {
+    visibility: "visible"
   }
 };
 
-export const addLayerLegendCiampinoTrees: LayerModel[] = [
+export const layerLegendCiampinoTrees: LayerModel[] = [
   {
-    id: "ciampino-trees",
+    id: "ciampino-trees-2d",
     name: "Ciampino Trees",
     symbol: {
       type: "line",

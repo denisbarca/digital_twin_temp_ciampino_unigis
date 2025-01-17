@@ -7,7 +7,7 @@ import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 import ciampinoBoundaries from "../assets/layers/ciampino_boundaries.geojson";
 
-export const addSourceCiampino = {
+export const sourceCiampino = {
   id: "ciampino-boundaries-source",
   args: <SourceSpecification | CanvasSourceSpecification>{
     type: "geojson",
@@ -18,10 +18,10 @@ export const addSourceCiampino = {
 export const colorLayerCiampino = ["#FF0000"];
 export const defaultColorCiampino = colorLayerCiampino[0];
 
-export const addLayerCiampino: AddLayerObject = {
+export const layerCiampino: AddLayerObject = {
   id: "ciampino-boundaries",
   type: "line",
-  source: addSourceCiampino.id,
+  source: sourceCiampino.id,
   paint: {
     "line-color": defaultColorCiampino,
     "line-width": 2, // 2px width
@@ -29,7 +29,7 @@ export const addLayerCiampino: AddLayerObject = {
   }
 };
 
-export const addLayerLegendCiampino: LayerModel[] = [
+export const layerLegendCiampino: LayerModel[] = [
   {
     id: "ciampino-boundaries",
     name: "Ciampino Boundaries",

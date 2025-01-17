@@ -33,6 +33,8 @@ export const addClickListener = (
     const features = map.queryRenderedFeatures(e.point, {
       layers: [layerId]
     });
+    console.log(features);
+
     if (features.length) {
       const feature = features[0];
       const description = getDescription(feature);

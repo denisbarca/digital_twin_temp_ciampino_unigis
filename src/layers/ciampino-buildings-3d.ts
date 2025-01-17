@@ -9,11 +9,7 @@ import { MAPTILER_API_KEY } from "../lib/utils";
 import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
 
-export class CiampinoBuildings3D {
-  // Insert the layer beneath any symbol layer.
-}
-
-export const addSourceBuildings3D = {
+export const sourceBuildings3D = {
   id: "openmaptiles",
   args: <SourceSpecification | CanvasSourceSpecification>{
     url: `https://api.maptiler.com/tiles/v3/tiles.json?key=${MAPTILER_API_KEY}`,
@@ -23,7 +19,7 @@ export const addSourceBuildings3D = {
 
 export const colorLayer3DBuildings = ["#D3D3D3", "#ADD8E6", "#0000FF"];
 
-export const addLayerBuildings3D: AddLayerObject = {
+export const layerBuildings3D: AddLayerObject = {
   id: "3d-buildings",
   source: "openmaptiles",
   "source-layer": "building",
@@ -61,7 +57,7 @@ export const addLayerBuildings3D: AddLayerObject = {
   }
 };
 
-export const addLayerLegend3DBuildings: LayerModel[] = [
+export const layerLegend3DBuildings: LayerModel[] = [
   {
     id: "3d-buildings",
     name: "Buildings (0 - 20+ meters)",
