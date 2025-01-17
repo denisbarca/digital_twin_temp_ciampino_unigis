@@ -2,6 +2,7 @@ export type LayerModel = {
   id: string;
   name: string;
   symbol: LayerSymbol;
+  hasSubClass: boolean;
   visible?: boolean;
 };
 

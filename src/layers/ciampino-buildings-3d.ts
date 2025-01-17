@@ -70,6 +70,7 @@ export const addLayerLegend3DBuildings: LayerModel[] = [
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayer3DBuildings
-    }
+    },
+    hasSubClass: false
   }
 ];

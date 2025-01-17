@@ -36,6 +36,7 @@ export const addLayerLegendCiampinoTrees: LayerModel[] = [
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayerCiampino
-    }
+    },
+    hasSubClass: false
   }
 ];

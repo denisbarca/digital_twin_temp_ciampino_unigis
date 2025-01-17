@@ -22,10 +22,6 @@ import {
 } from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import {
-  addLayerCiampinoLanduse,
-  addSourceCiampinoLanduse
-} from "./layers/ciampino-landuse";
-import {
   addLayerCiampinoTrees,
   addSourceCiampinoTrees
 } from "./layers/ciampino-trees";
@@ -48,7 +44,6 @@ const addSourcesAndLayers = () => {
   const sourcesAndLayers = [
     { source: addSourceCiampino, layer: addLayerCiampino },
     { source: addSourceBuildings3D, layer: addLayerBuildings3D },
-    { source: addSourceCiampinoLanduse, layer: addLayerCiampinoLanduse },
     { source: addSourceCiampinoTrees, layer: addLayerCiampinoTrees }
   ];
 
@@ -84,16 +79,6 @@ addClickListener(
   (feature) => `
   <strong>Building ID:</strong> ${feature.id}<br>
   <strong>Height:</strong> ${feature.properties.render_height} meters
-`
-);
-
-// Add click event listener for landuse layer
-addClickListener(
-  map,
-  "ciampino-landuse",
-  (feature) => `
-  <strong>Landuse Class:</strong> ${feature.properties.class_2018}<br>
-  <strong>Area:</strong> ${feature.properties.area.toFixed(2)} sq. meters
 `
 );
 

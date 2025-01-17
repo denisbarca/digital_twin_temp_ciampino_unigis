@@ -38,6 +38,7 @@ export const addLayerLegendCiampino: LayerModel[] = [
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayerCiampino
-    }
+    },
+    hasSubClass: false
   }
 ];

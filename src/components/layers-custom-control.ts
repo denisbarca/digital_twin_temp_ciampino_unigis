@@ -58,8 +58,8 @@ export class LayersControl implements IControl {
 
   // Set legend row
   private _setLayerItem(layer: LayerModel): HTMLDivElement {
-    const layerItem = this._setLayerItemContainer(layer.id);
-    if (layer.id === "ciampino-landuse") {
+    const layerItem = this._setLayerItemContainer();
+    if (layer.hasSubClass) {
       const layerTitleLanduse = this._setLayerTitleLanduse();
       layerItem.appendChild(layerTitleLanduse);
       Object.keys(colorMapping).forEach((className) => {
@@ -80,26 +80,26 @@ export class LayersControl implements IControl {
       const label = document.createElement("label");
       label.textContent = layer.name;
 
+      if (checkbox) layerInfo.appendChild(checkbox);
       layerInfo.appendChild(label);
-      layerInfo.appendChild(layerIcon);
-      layerInfo.appendChild(document.createTextNode(layer.name));
+      // layerInfo.appendChild(document.createTextNode(layer.name));
       layerItem.appendChild(layerInfo);
-      if (checkbox) layerItem.appendChild(checkbox);
+      layerItem.appendChild(layerIcon);
     }
     return layerItem;
   }
 
   // Set container for legend row
-  private _setLayerItemContainer(layerId: string): HTMLDivElement {
+  private _setLayerItemContainer(): HTMLDivElement {
     const layerItem = document.createElement("div");
     layerItem.style.marginTop = "20px";
     layerItem.style.fontSize = "12px";
     layerItem.style.fontWeight = "normal";
-    if (layerId === "ciampino-landuse") {
-      layerItem.style.display = "flex";
-      layerItem.style.justifyContent = "space-between";
-      layerItem.style.alignItems = "center";
-    }
+    // if (layerId === "ciampino-landuse") {
+    layerItem.style.display = "flex";
+    layerItem.style.justifyContent = "space-between";
+    layerItem.style.alignItems = "center";
+    // }
     return layerItem;
   }
 

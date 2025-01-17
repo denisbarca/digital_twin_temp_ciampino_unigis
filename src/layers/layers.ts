@@ -1,13 +1,11 @@
 import { LayerModel } from "../lib/models/layer-model";
 import { addLayerLegendCiampino } from "./ciampino-boundaries";
 import { addLayerLegend3DBuildings } from "./ciampino-buildings-3d";
-import { addLayerLegendCiampinoLanduse } from "./ciampino-landuse";
 import { addLayerLegendCiampinoTrees } from "./ciampino-trees";
 
 const layersLegend: LayerModel[] = [
   ...addLayerLegendCiampino,
   ...addLayerLegend3DBuildings,
-  ...addLayerLegendCiampinoLanduse,
   ...addLayerLegendCiampinoTrees
 ];
 

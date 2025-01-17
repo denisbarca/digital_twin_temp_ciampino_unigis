@@ -51,6 +51,7 @@ export const addLayerLegend3DTrees: LayerModel[] = [
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayer3DTrees
-    }
+    },
+    hasSubClass: false
   }
 ];

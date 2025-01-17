@@ -107,7 +107,8 @@ export const addLayerLegendCiampinoLanduse: LayerModel[] = [
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: Object.values(colorMapping)
-    }
+    },
+    hasSubClass: true
   }
 ];
 
