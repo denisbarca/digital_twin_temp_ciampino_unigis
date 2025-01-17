@@ -9,6 +9,7 @@
   "lint:scripts": "eslint --ext .ts,.tsx src --fix",
   "dependencies": {
     "@deck.gl/mapbox": "^9.0.38",
+    "@google/earthengine": "^1.4.5",
     "@maplibre/maplibre-gl-geocoder": "^1.7.0",
     "@maptiler/sdk": "^3.0.0",
     "@types/three": "^0.172.0",

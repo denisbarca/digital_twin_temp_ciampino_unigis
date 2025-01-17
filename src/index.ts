@@ -23,10 +23,11 @@ import {
   sourceCiampinoTrees
 } from "./layers/ciampino-trees";
 import { layerTrees3D } from "./layers/ciampino-trees-3d";
+import { RasterSatelliteLoaderService } from "./services/raster-satellite-loader.service";
 
 // #region Map initialization
-
 export const initialBasemap = baseLayers[0];
+const rasterService = new RasterSatelliteLoaderService();
 
 const map = new maplibregl.Map({
   style: initialBasemap.url,
@@ -36,8 +37,7 @@ const map = new maplibregl.Map({
 });
 // #endregion
 
-//#region Utils
-// Function to add sources and layers to the map
+//#region Add sources and layers to the map
 const addSourcesAndLayers = () => {
   const sourcesAndLayers = [
     { source: sourceCiampino, layer: layerCiampino },
@@ -60,6 +60,8 @@ const addSourcesAndLayers = () => {
 
 // #region Loading map
 map.on("load", () => {
+  console.log("Private Key:", rasterService["privateKey"]);
+  rasterService.initialize();
   addSourcesAndLayers();
 });
 // #endregion
@@ -100,7 +102,6 @@ addClickListener(
   "ciampino-trees-2d",
   (feature) => `
   <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
-  <strong>Height:</strong> ${feature.properties.height} meters
 `
 );
 addClickListener(
@@ -108,7 +109,6 @@ addClickListener(
   "ciampino-trees-3d",
   (feature) => `
   <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
-  <strong>Height:</strong> ${feature.properties.height} meters
 `
 );
 // #endregion
