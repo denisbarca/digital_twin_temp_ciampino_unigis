@@ -3,16 +3,26 @@ import { City } from "./models/city";
 
 export const CIAMPINO_CITY: City = {
   name: "Ciampino",
-  latitude: 41.7994,
-  longitude: 12.61
+  coords: {
+    latitude: 41.7994,
+    longitude: 12.61
+  },
+  minCoords: {
+    longitude: 12.584052046857774,
+    latitude: 41.775150522896986
+  },
+  maxCoords: {
+    longitude: 12.644934317596181,
+    latitude: 41.821556407355871
+  }
 };
 
 export const ZOOM_LEVEL = 13;
 export const BASEMAP_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 export const latLong: LngLatLike = [
-  CIAMPINO_CITY.longitude,
-  CIAMPINO_CITY.latitude
+  CIAMPINO_CITY.coords.longitude,
+  CIAMPINO_CITY.coords.latitude
 ];
 
 export enum ControlsPosition {

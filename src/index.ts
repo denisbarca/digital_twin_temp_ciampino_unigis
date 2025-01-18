@@ -23,15 +23,17 @@ import {
   sourceCiampinoTrees
 } from "./layers/ciampino-trees";
 import { layerTrees3D } from "./layers/ciampino-trees-3d";
-import { RasterSatelliteLoaderService } from "./services/raster-satellite-loader.service";
+import { GoogleEarthEngineService } from "./services/raster-satellite-loader.service";
+
+// import ciampinoBoundaries from "./assets/layers/ciampino_boundaries.geojson";
 
 // #region Map initialization
 export const initialBasemap = baseLayers[0];
-const rasterService = new RasterSatelliteLoaderService();
+const rasterService = new GoogleEarthEngineService();
 
 const map = new maplibregl.Map({
   style: initialBasemap.url,
-  center: [CIAMPINO_CITY.longitude, CIAMPINO_CITY.latitude],
+  center: [CIAMPINO_CITY.coords.longitude, CIAMPINO_CITY.coords.latitude],
   zoom: ZOOM_LEVEL,
   container: "map"
 });
@@ -59,9 +61,8 @@ const addSourcesAndLayers = () => {
 //#endregion
 
 // #region Loading map
-map.on("load", () => {
-  console.log("Private Key:", rasterService["privateKey"]);
-  rasterService.initialize();
+map.on("load", async () => {
+  await rasterService.initialize();
   addSourcesAndLayers();
 });
 // #endregion
