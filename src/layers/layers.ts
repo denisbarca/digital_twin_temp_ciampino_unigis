@@ -1,12 +1,16 @@
 import { LayerModel } from "../lib/models/layer-model";
 import { layerLegendCiampino } from "./ciampino-boundaries";
 import { layerLegend3DBuildings } from "./ciampino-buildings-3d";
+import { layerLegendCiampinoLanduse } from "./ciampino-landuse";
+import { layerLegendCiampinoLST } from "./ciampino-lst";
 import { layerLegendCiampinoTrees } from "./ciampino-trees";
 
 const layersLegend: LayerModel[] = [
   ...layerLegendCiampino,
   ...layerLegend3DBuildings,
-  ...layerLegendCiampinoTrees
+  ...layerLegendCiampinoTrees,
+  ...layerLegendCiampinoLST,
+  ...layerLegendCiampinoLanduse
 ];
 
 export const getLayerLegend = (id: string): LayerModel | undefined => {
@@ -33,7 +37,6 @@ export const getLayerColor = (
 
 export const insertLayerBeneath = (map: maplibregl.Map): string | undefined => {
   const layers = map?.getStyle().layers;
-
   let labelLayerId;
   if (layers) {
     for (let i = 0; i < layers.length; i++) {

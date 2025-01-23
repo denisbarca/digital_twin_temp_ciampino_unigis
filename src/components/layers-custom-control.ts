@@ -54,7 +54,7 @@ export class LayersControl implements IControl {
   private _setLayerList(): HTMLDivElement {
     const layerList = document.createElement("div");
     layerList.className = "layer-list";
-    layerList.innerHTML = "Layers list";
+    layerList.innerHTML = "Layers controls";
     layerList.style.fontSize = "14px";
     layerList.style.fontStyle = "italic";
     layerList.style.fontWeight = "bold";
@@ -134,7 +134,7 @@ export class LayersControl implements IControl {
     const checkbox = document.createElement("input");
     checkbox.className = "layer-toggle";
     checkbox.type = "checkbox";
-    checkbox.checked = true;
+    checkbox.checked = layer.onRenderVisible;
     checkbox.onchange = () => {
       if (checkbox.checked) this._setVisibilityLogic(map, layer.id, "visible");
       else this._setVisibilityLogic(map, layer.id, "none");

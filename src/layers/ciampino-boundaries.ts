@@ -24,7 +24,7 @@ export const layerCiampino: AddLayerObject = {
   source: sourceCiampino.id,
   paint: {
     "line-color": defaultColorCiampino,
-    "line-width": 2, // 2px width
+    "line-width": 2,
     "line-opacity": 1
   }
 };
@@ -39,6 +39,7 @@ export const layerLegendCiampino: LayerModel[] = [
       height: mapLayerHeight["line"],
       color: colorLayerCiampino
     },
-    hasSubClass: false
+    hasSubClass: false,
+    onRenderVisible: true
   }
 ];

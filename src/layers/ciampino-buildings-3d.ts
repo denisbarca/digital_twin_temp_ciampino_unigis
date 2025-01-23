@@ -59,9 +59,22 @@ export const layerBuildings3D: AddLayerObject = {
   }
 };
 
+export const layerBuildings2D: AddLayerObject = {
+  id: "2d-buildings",
+  source: "openmaptiles",
+  "source-layer": "building",
+  type: "fill",
+  // minzoom: 12,
+  filter: ["all", ["!=", "hide_3d", true]],
+  paint: {
+    "fill-color": colorLayer3DBuildings[0], // Single fill color
+    "fill-opacity": 0.6
+  }
+};
+
 export const layerLegend3DBuildings: LayerModel[] = [
   {
-    id: "3d-buildings",
+    id: ["3d-buildings", "2d-buildings"],
     name: "Buildings (0 - 20+ meters)",
     symbol: {
       type: "line",
@@ -69,6 +82,7 @@ export const layerLegend3DBuildings: LayerModel[] = [
       height: mapLayerHeight["line"],
       color: colorLayer3DBuildings
     },
-    hasSubClass: false
+    hasSubClass: false,
+    onRenderVisible: true
   }
 ];

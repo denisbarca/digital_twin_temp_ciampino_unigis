@@ -3,7 +3,7 @@ export type LayerModel = {
   name: string;
   symbol: LayerSymbol;
   hasSubClass: boolean;
-  visible?: boolean;
+  onRenderVisible: boolean;
 };
 
 export type LayerSymbol = {

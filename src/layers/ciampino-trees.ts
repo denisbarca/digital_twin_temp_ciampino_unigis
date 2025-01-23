@@ -34,13 +34,14 @@ export const layerCiampinoTrees: AddLayerObject = {
 export const layerLegendCiampinoTrees: LayerModel[] = [
   {
     id: ["ciampino-trees-2d", "ciampino-trees-3d"],
-    name: "Ciampino Trees",
+    name: "Trees",
     symbol: {
       type: "line",
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
       color: colorLayerCiampino
     },
-    hasSubClass: false
+    hasSubClass: false,
+    onRenderVisible: true
   }
 ];

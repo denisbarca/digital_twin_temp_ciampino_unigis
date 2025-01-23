@@ -5,6 +5,7 @@ import {
   addClickListener,
   CIAMPINO_CITY,
   ControlsPosition,
+  mapMaxBounds,
   ZOOM_LEVEL
 } from "./lib/utils";
 import { layerCiampino, sourceCiampino } from "./layers/ciampino-boundaries";
@@ -14,6 +15,7 @@ import { HomeControl } from "./components/home-custom-control";
 import { LayersControl } from "./components/layers-custom-control";
 import { baseLayers, BasemapControl } from "./components/basemap-control";
 import {
+  layerBuildings2D,
   layerBuildings3D,
   sourceBuildings3D
 } from "./layers/ciampino-buildings-3d";
@@ -23,37 +25,44 @@ import {
   sourceCiampinoTrees
 } from "./layers/ciampino-trees";
 import { layerTrees3D } from "./layers/ciampino-trees-3d";
-import { GoogleEarthEngineService } from "./services/raster-satellite-loader.service";
-
-// import ciampinoBoundaries from "./assets/layers/ciampino_boundaries.geojson";
+import { layerCiampinoLST, sourceCiampinoLST } from "./layers/ciampino-lst";
+import {
+  layerCiampinoLanduse,
+  sourceCiampinoLanduse
+} from "./layers/ciampino-landuse";
 
 // #region Map initialization
 export const initialBasemap = baseLayers[0];
-const rasterService = new GoogleEarthEngineService();
 
 const map = new maplibregl.Map({
   style: initialBasemap.url,
   center: [CIAMPINO_CITY.coords.longitude, CIAMPINO_CITY.coords.latitude],
   zoom: ZOOM_LEVEL,
-  container: "map"
+  container: "map",
+  maxBounds: mapMaxBounds()
 });
 // #endregion
 
 //#region Add sources and layers to the map
 const addSourcesAndLayers = () => {
   const sourcesAndLayers = [
+    { source: sourceCiampinoLST, layer: layerCiampinoLST },
     { source: sourceCiampino, layer: layerCiampino },
     { source: sourceBuildings3D, layer: layerBuildings3D },
+    { source: sourceBuildings3D, layer: layerBuildings2D },
     { source: sourceCiampinoTrees, layer: layerCiampinoTrees },
-    { source: sourceCiampinoTrees, layer: layerTrees3D }
+    { source: sourceCiampinoTrees, layer: layerTrees3D },
+    { source: sourceCiampinoLanduse, layer: layerCiampinoLanduse }
   ];
-
   sourcesAndLayers.forEach(({ source, layer }) => {
     if (!map.getSource(source.id)) {
       map.addSource(source.id, source.args);
     }
     if (!map.getLayer(layer.id)) {
-      const beneath = map.getLayer("3d-buildings") ? "3d-buildings" : undefined;
+      const beneath =
+        map.getLayer("3d-buildings") || map.getLayer("ciampino-trees-3d")
+          ? "3d-buildings"
+          : undefined;
       map.addLayer(layer, beneath);
     }
   });
@@ -62,7 +71,6 @@ const addSourcesAndLayers = () => {
 
 // #region Loading map
 map.on("load", async () => {
-  await rasterService.initialize();
   addSourcesAndLayers();
 });
 // #endregion
@@ -78,10 +86,14 @@ map.on("zoom", () => {
   const zoom = map.getZoom();
   if (zoom >= 15) {
     map.setLayoutProperty("ciampino-trees-2d", "visibility", "none");
+    map.setLayoutProperty("2d-buildings", "visibility", "none");
     map.setLayoutProperty("ciampino-trees-3d", "visibility", "visible");
+    map.setLayoutProperty("3d-buildings", "visibility", "visible");
   } else {
     map.setLayoutProperty("ciampino-trees-2d", "visibility", "visible");
+    map.setLayoutProperty("2d-buildings", "visibility", "visible");
     map.setLayoutProperty("ciampino-trees-3d", "visibility", "none");
+    map.setLayoutProperty("3d-buildings", "visibility", "none");
   }
 });
 // #endregion
@@ -92,8 +104,31 @@ addClickListener(
   map,
   "3d-buildings",
   (feature) => `
-  <strong>Building ID:</strong> ${feature.id}<br>
-  <strong>Height:</strong> ${feature.properties.render_height} meters
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Building ID:</strong> ${feature.id}<br>
+    <strong>Height:</strong> ${feature.properties.render_height} meters
+  </div>
+`
+);
+addClickListener(
+  map,
+  "2d-buildings",
+  (feature) => `
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Building ID:</strong> ${feature.id}<br>
+    <strong>Height:</strong> ${feature.properties.render_height} meters
+  </div>
+`
+);
+
+// Add click event listener for temperature layer
+addClickListener(
+  map,
+  "ciampino-lst",
+  (feature) => `
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Temperature:</strong> ${feature.properties.DN.toFixed(2)}<br>
+  </div>
 `
 );
 
@@ -102,14 +137,18 @@ addClickListener(
   map,
   "ciampino-trees-2d",
   (feature) => `
-  <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+  </div>
 `
 );
 addClickListener(
   map,
   "ciampino-trees-3d",
   (feature) => `
-  <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+  </div>
 `
 );
 // #endregion

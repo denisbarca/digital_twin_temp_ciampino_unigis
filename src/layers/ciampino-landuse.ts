@@ -93,8 +93,10 @@ export const layerCiampinoLanduse: AddLayerObject = {
       "Forests",
       colorMapping["Forests"],
       "#888888" // Default color if no match
-    ],
-    "fill-opacity": 0.2
+    ]
+  },
+  layout: {
+    visibility: "none"
   }
 };
 
@@ -108,7 +110,8 @@ export const layerLegendCiampinoLanduse: LayerModel[] = [
       height: mapLayerHeight["line"],
       color: Object.values(colorMapping)
     },
-    hasSubClass: true
+    hasSubClass: false,
+    onRenderVisible: false
   }
 ];
 
