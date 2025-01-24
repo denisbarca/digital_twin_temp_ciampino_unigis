@@ -25,11 +25,17 @@ import {
   sourceCiampinoTrees
 } from "./layers/ciampino-trees";
 import { layerTrees3D } from "./layers/ciampino-trees-3d";
-import { layerCiampinoLST, sourceCiampinoLST } from "./layers/ciampino-lst";
 import {
+  colorLSTMapping,
+  layerCiampinoLST,
+  sourceCiampinoLST
+} from "./layers/ciampino-lst";
+import {
+  colorCiampinoLanduseMapping,
   layerCiampinoLanduse,
   sourceCiampinoLanduse
 } from "./layers/ciampino-landuse";
+import { LegendLayersControl } from "./components/legend-layers-control";
 
 // #region Map initialization
 export const initialBasemap = baseLayers[0];
@@ -184,5 +190,26 @@ map.addControl(
     initialBasemap: initialBasemap
   }),
   ControlsPosition.BOTTOM_RIGHT
+);
+// #endregion
+
+// #region Control bottom-left
+// Add custom list control
+map.addControl(
+  new LegendLayersControl(
+    "Legend Land Surface Temperature",
+    Object.entries(colorLSTMapping).map(([text, icon]) => ({ text, icon }))
+  ),
+  ControlsPosition.BOTTOM_LEFT
+);
+map.addControl(
+  new LegendLayersControl(
+    "Legend Ciampino Landuse",
+    Object.entries(colorCiampinoLanduseMapping).map(([text, icon]) => ({
+      text,
+      icon
+    }))
+  ),
+  ControlsPosition.BOTTOM_LEFT
 );
 // #endregion

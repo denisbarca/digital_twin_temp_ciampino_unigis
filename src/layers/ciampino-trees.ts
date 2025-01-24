@@ -24,7 +24,7 @@ export const layerCiampinoTrees: AddLayerObject = {
   source: sourceCiampinoTrees.id,
   paint: {
     "circle-color": defaultColorCiampino,
-    "circle-radius": 3
+    "circle-radius": 2
   },
   layout: {
     visibility: "visible"

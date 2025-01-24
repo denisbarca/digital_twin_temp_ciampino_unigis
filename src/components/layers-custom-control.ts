@@ -1,7 +1,7 @@
 import { Map, IControl } from "maplibre-gl";
 import { LayerModel } from "../lib/models/layer-model";
 import { getLayersLegend } from "../layers/layers";
-import { colorMapping } from "../layers/ciampino-landuse";
+import { colorCiampinoLanduseMapping } from "../layers/ciampino-landuse";
 
 // Define the custom "Layers" control
 export class LayersControl implements IControl {
@@ -46,6 +46,8 @@ export class LayersControl implements IControl {
       "Open Sans, Helvetica Neue, Arial, Helvetica, sans-serif";
     this._applyResponsiveStyles();
     this.container.style.padding = "10px";
+    this.container.style.borderRadius = "4px"; // Optional: Add border radius for rounded corners
+    this.container.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)"; // Optional: Add box shadow for better appearance
     return this.container;
   }
   // #endregion
@@ -68,9 +70,9 @@ export class LayersControl implements IControl {
     if (layer.hasSubClass) {
       const layerTitleLanduse = this._setLayerTitleLanduse();
       layerItem.appendChild(layerTitleLanduse);
-      Object.keys(colorMapping).forEach((className) => {
+      Object.keys(colorCiampinoLanduseMapping).forEach((className) => {
         const classItem = this._setSubClassItem(
-          className as keyof typeof colorMapping
+          className as keyof typeof colorCiampinoLanduseMapping
         );
         layerTitleLanduse.appendChild(classItem);
       });
@@ -79,9 +81,7 @@ export class LayersControl implements IControl {
       const layerIcon = this._setLayerIcon(layer);
 
       let checkbox;
-      if (this.map) {
-        checkbox = this._setCheckbox(this.map, layer);
-      }
+      if (this.map) checkbox = this._setCheckbox(this.map, layer);
 
       const label = document.createElement("label");
       label.textContent = layer.name;
@@ -152,7 +152,7 @@ export class LayersControl implements IControl {
 
   // Set item with subclasses
   private _setSubClassItem(
-    className: keyof typeof colorMapping
+    className: keyof typeof colorCiampinoLanduseMapping
   ): HTMLDivElement {
     const classItem = document.createElement("div");
     classItem.style.display = "flex";
@@ -162,11 +162,11 @@ export class LayersControl implements IControl {
     const classColor = document.createElement("div");
     classColor.style.width = "12px";
     classColor.style.height = "12px";
-    classColor.style.backgroundColor = colorMapping[className];
+    classColor.style.backgroundColor = colorCiampinoLanduseMapping[className];
     classColor.style.marginRight = "5px";
 
     const classLabel = document.createElement("div");
-    classLabel.innerHTML = className;
+    classLabel.innerHTML = String(className);
 
     classItem.appendChild(classColor);
     classItem.appendChild(classLabel);

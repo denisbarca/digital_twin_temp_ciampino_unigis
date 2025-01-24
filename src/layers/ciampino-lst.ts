@@ -116,17 +116,19 @@ export const layerCiampinoLST: AddLayerObject = {
       39,
       "#FF0000", // Red
       40,
-      "#8B0000", // Darker Red
+      "#800080", // Dark Purple
       41,
-      "#8B0000", // Darker Red
+      "#800080", // Dark Purple
       42,
-      "#8B0000", // Darker Red
+      "#800080", // Darker Purple
       43,
-      "#8B0000", // Darker Red
+      "#800080", // Darker Purple
       44,
-      "#8B0000", // Darker Red
+      "#800080", // Darker Purple
       45,
-      "#8B0000", // Darker Red
+      "#800080", // Darker Purple
+      46,
+      "#800080", // Darker Purple
       defaultColorLST
     ],
     "fill-opacity": 0.4
@@ -147,6 +149,15 @@ export const layerLegendCiampinoLST: LayerModel[] = [
     onRenderVisible: true
   }
 ];
+
+export const colorLSTMapping = {
+  "0 - 10°C": "#0000FF", // Blue
+  "10 - 20°C": "#00FFFF", // Cyan
+  "20 - 30°C": "#FFFF00", // Yellow
+  "30 - 35°C": "#B9958B", // Orange + 0.4 opacity
+  "35 - 40°C": "#BA548C", // Red + 0.4 opacity
+  "40 - 45°C": "#8553BE" // Darker purple + 0.4 opacity
+};
 
 // export const layerCiampinoLSTHexagons = async (
 //   geojsonUrl: string

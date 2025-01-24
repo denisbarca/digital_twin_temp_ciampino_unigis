@@ -18,26 +18,26 @@ export const sourceCiampinoLanduse = {
 export const colorLayerCiampino = ["#888888"];
 export const defaultColorCiampino = colorLayerCiampino[0];
 // Define the color mapping based on class_2018 property
-export const colorMapping = {
-  "Arable land (annual crops)": "#FF0000", // Red
-  "Discontinuous dense urban fabric (S.L. : 50% -  80%)": "#00FF00", // Green
-  "Discontinuous medium density urban fabric (S.L. : 30% - 50%)": "#0000FF", // Blue
-  "Other roads and associated land": "#FFFF00", // Yellow
-  Pastures: "#FF00FF", // Magenta
-  "Discontinuous low density urban fabric (S.L. : 10% - 30%)": "#00FFFF", // Cyan
-  "Continuous urban fabric (S.L. : > 80%)": "#800000", // Maroon
-  "Industrial, commercial, public, military and private units": "#808000", // Olive
-  "Discontinuous very low density urban fabric (S.L. : < 10%)": "#800080", // Purple
-  "Land without current use": "#008000", // Dark Green
-  "Railways and associated land": "#000080", // Navy
-  "Isolated structures": "#808080", // Gray
+export const colorCiampinoLanduseMapping = {
+  "Arable land (annual crops)": "#FFFF99", // Light Yellow
+  "Discontinuous dense urban fabric (S.L. : 50% -  80%)": "#FF4500", // Orange Red
+  "Discontinuous medium density urban fabric (S.L. : 30% - 50%)": "#FF6347", // Tomato
+  "Other roads and associated land": "#A9A9A9", // Dark Gray
+  Pastures: "#ADFF2F", // Green Yellow
+  "Discontinuous low density urban fabric (S.L. : 10% - 30%)": "#FF7F50", // Coral
+  "Continuous urban fabric (S.L. : > 80%)": "#8B0000", // Dark Red
+  "Industrial, commercial, public, military and private units": "#A52A2A", // Brown
+  "Discontinuous very low density urban fabric (S.L. : < 10%)": "#FF8C00", // Dark Orange
+  "Land without current use": "#FFFFE0", // Light Yellow
+  "Railways and associated land": "#00FFFF", // Black
+  "Isolated structures": "#D3D3D3", // Light Gray
   Airports: "#FFA500", // Orange
-  "Mineral extraction and dump sites": "#A52A2A", // Brown
-  "Construction sites": "#FFC0CB", // Pink
-  "Green urban areas": "#FFD700", // Gold
-  "Sports and leisure facilities": "#ADFF2F", // Green Yellow
-  "Permanent crops (vineyards, fruit trees, olive groves)": "#4B0082", // Indigo
-  Forests: "#8B4513" // Saddle Brown
+  "Mineral extraction and dump sites": "#000000", // Black
+  "Construction sites": "#FFD700", // Gold
+  "Green urban areas": "#32CD32", // Lime Green
+  "Sports and leisure facilities": "#800080", // Pale Green
+  "Permanent crops (vineyards, fruit trees, olive groves)": "#9ACD32", // Yellow Green
+  Forests: "#228B22" // Forest Green
 };
 
 export const layerCiampinoLanduse: AddLayerObject = {
@@ -49,50 +49,56 @@ export const layerCiampinoLanduse: AddLayerObject = {
       "match",
       ["get", "class_2018"],
       "Arable land (annual crops)",
-      colorMapping["Arable land (annual crops)"],
+      colorCiampinoLanduseMapping["Arable land (annual crops)"],
       "Discontinuous dense urban fabric (S.L. : 50% -  80%)",
-      colorMapping["Discontinuous dense urban fabric (S.L. : 50% -  80%)"],
+      colorCiampinoLanduseMapping[
+        "Discontinuous dense urban fabric (S.L. : 50% -  80%)"
+      ],
       "Discontinuous medium density urban fabric (S.L. : 30% - 50%)",
-      colorMapping[
+      colorCiampinoLanduseMapping[
         "Discontinuous medium density urban fabric (S.L. : 30% - 50%)"
       ],
       "Other roads and associated land",
-      colorMapping["Other roads and associated land"],
+      colorCiampinoLanduseMapping["Other roads and associated land"],
       "Pastures",
-      colorMapping["Pastures"],
+      colorCiampinoLanduseMapping["Pastures"],
       "Discontinuous low density urban fabric (S.L. : 10% - 30%)",
-      colorMapping["Discontinuous low density urban fabric (S.L. : 10% - 30%)"],
+      colorCiampinoLanduseMapping[
+        "Discontinuous low density urban fabric (S.L. : 10% - 30%)"
+      ],
       "Continuous urban fabric (S.L. : > 80%)",
-      colorMapping["Continuous urban fabric (S.L. : > 80%)"],
+      colorCiampinoLanduseMapping["Continuous urban fabric (S.L. : > 80%)"],
       "Industrial, commercial, public, military and private units",
-      colorMapping[
+      colorCiampinoLanduseMapping[
         "Industrial, commercial, public, military and private units"
       ],
       "Discontinuous very low density urban fabric (S.L. : < 10%)",
-      colorMapping[
+      colorCiampinoLanduseMapping[
         "Discontinuous very low density urban fabric (S.L. : < 10%)"
       ],
       "Land without current use",
-      colorMapping["Land without current use"],
+      colorCiampinoLanduseMapping["Land without current use"],
       "Railways and associated land",
-      colorMapping["Railways and associated land"],
+      colorCiampinoLanduseMapping["Railways and associated land"],
       "Isolated structures",
-      colorMapping["Isolated structures"],
+      colorCiampinoLanduseMapping["Isolated structures"],
       "Airports",
-      colorMapping["Airports"],
+      colorCiampinoLanduseMapping["Airports"],
       "Mineral extraction and dump sites",
-      colorMapping["Mineral extraction and dump sites"],
+      colorCiampinoLanduseMapping["Mineral extraction and dump sites"],
       "Construction sites",
-      colorMapping["Construction sites"],
+      colorCiampinoLanduseMapping["Construction sites"],
       "Green urban areas",
-      colorMapping["Green urban areas"],
+      colorCiampinoLanduseMapping["Green urban areas"],
       "Sports and leisure facilities",
-      colorMapping["Sports and leisure facilities"],
+      colorCiampinoLanduseMapping["Sports and leisure facilities"],
       "Permanent crops (vineyards, fruit trees, olive groves)",
-      colorMapping["Permanent crops (vineyards, fruit trees, olive groves)"],
+      colorCiampinoLanduseMapping[
+        "Permanent crops (vineyards, fruit trees, olive groves)"
+      ],
       "Forests",
-      colorMapping["Forests"],
-      "#888888" // Default color if no match
+      colorCiampinoLanduseMapping["Forests"],
+      defaultColorCiampino // Default color if no match
     ]
   },
   layout: {
@@ -108,7 +114,7 @@ export const layerLegendCiampinoLanduse: LayerModel[] = [
       type: "line",
       width: mapLayerWidth["line"],
       height: mapLayerHeight["line"],
-      color: Object.values(colorMapping)
+      color: Object.values(colorCiampinoLanduseMapping)
     },
     hasSubClass: false,
     onRenderVisible: false
