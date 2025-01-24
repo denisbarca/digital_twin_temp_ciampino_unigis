@@ -126,6 +126,7 @@ export const addClickListener = (
             features: [...currentData.features, newFeature]
           });
           console.log(`Feature added at: ${lng}, ${lat}`);
+          popup.remove();
         });
       }
     }
