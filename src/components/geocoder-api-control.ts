@@ -7,6 +7,9 @@ import MaplibreGeocoder, {
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 import { Position } from "deck.gl/dist";
 import maplibregl from "maplibre-gl/dist/maplibre-gl";
+import { mapMaxBounds } from "../lib/utils";
+
+const boundingBox = mapMaxBounds();
 
 const geocoderApi: MaplibreGeocoderApi = {
   forwardGeocode: async (config: MaplibreGeocoderApiConfig) => {
@@ -14,7 +17,9 @@ const geocoderApi: MaplibreGeocoderApi = {
     try {
       const request = `https://nominatim.openstreetmap.org/search?q=${
         config.query
-      }&format=geojson&polygon_geojson=1&addressdetails=1`;
+      }&format=geojson&polygon_geojson=1&addressdetails=1&bounded=1&viewbox=${
+        boundingBox[0]
+      },${boundingBox[1]},${boundingBox[2]},${boundingBox[3]}`;
       const response = await fetch(request);
       const geojson = await response.json();
       for (const feature of geojson.features) {
@@ -51,5 +56,6 @@ export const geocoder = new MaplibreGeocoder(geocoderApi, {
   maplibregl: maplibregl,
   flyTo: { speed: 1 },
   showResultMarkers: true,
-  showResultsWhileTyping: true
+  showResultsWhileTyping: true,
+  bbox: boundingBox
 });

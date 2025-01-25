@@ -1,11 +1,11 @@
 import "./style.scss";
-import maplibregl from "maplibre-gl";
+import maplibregl, { ScaleControl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
   addClickListener,
   CIAMPINO_CITY,
   ControlsPosition,
-  mapMaxBounds,
+  mapMaxBoundsLngLat,
   ZOOM_LEVEL
 } from "./lib/utils";
 import { layerCiampino, sourceCiampino } from "./layers/ciampino-boundaries";
@@ -45,7 +45,7 @@ const map = new maplibregl.Map({
   center: [CIAMPINO_CITY.coords.longitude, CIAMPINO_CITY.coords.latitude],
   zoom: ZOOM_LEVEL,
   container: "map",
-  maxBounds: mapMaxBounds()
+  maxBounds: mapMaxBoundsLngLat()
 });
 // #endregion
 
@@ -194,6 +194,13 @@ map.addControl(
 // #endregion
 
 // #region Control bottom-left
+map.addControl(
+  new ScaleControl({
+    maxWidth: 275,
+    unit: "metric"
+  }),
+  ControlsPosition.BOTTOM_LEFT
+);
 // Add custom list control
 map.addControl(
   new LegendLayersControl(
@@ -212,4 +219,5 @@ map.addControl(
   ),
   ControlsPosition.BOTTOM_LEFT
 );
+
 // #endregion

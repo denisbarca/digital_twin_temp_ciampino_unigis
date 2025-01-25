@@ -47,7 +47,7 @@ const mapAreaMaxBounds = [
   [12.485553717215652, 41.847177583911986]
 ];
 
-export const mapMaxBounds = (): [LngLatLike, LngLatLike] => {
+export const mapMaxBounds = (): number[] => {
   const lonAreaMaxBounds = mapAreaMaxBounds.map((coord) => coord[0]);
   const latAreaMaxBounds = mapAreaMaxBounds.map((coord) => coord[1]);
 
@@ -55,9 +55,14 @@ export const mapMaxBounds = (): [LngLatLike, LngLatLike] => {
   const maxLongitude = Math.max(...lonAreaMaxBounds);
   const minLatitude = Math.min(...latAreaMaxBounds);
   const maxLatitude = Math.max(...latAreaMaxBounds);
+  return [minLongitude, minLatitude, maxLongitude, maxLatitude];
+};
+
+export const mapMaxBoundsLngLat = (): [LngLatLike, LngLatLike] => {
+  const coords = mapMaxBounds();
   return [
-    [minLongitude, minLatitude],
-    [maxLongitude, maxLatitude]
+    [coords[0], coords[1]],
+    [coords[2], coords[3]]
   ];
 };
 // #endregion
