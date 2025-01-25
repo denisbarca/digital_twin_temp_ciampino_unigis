@@ -225,24 +225,19 @@ map.addControl(
 // Dialog info
 const openInfoDialog = () => {
   const dialog = document.getElementById("info-dialog");
-  if (dialog) {
-    dialog.classList.add("show");
-  }
+  if (dialog) dialog.classList.add("show");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const infoButton = document.querySelector(".header-button");
-  if (infoButton) {
-    infoButton.addEventListener("click", openInfoDialog);
-  }
+  const infoButton = document.getElementById("info-btn");
+
+  if (infoButton) infoButton.addEventListener("click", openInfoDialog);
 
   const closeInfoDialogBtn = document.getElementById("close-info-dialog-btn");
   if (closeInfoDialogBtn) {
     closeInfoDialogBtn.addEventListener("click", () => {
       const dialog = document.getElementById("info-dialog");
-      if (dialog) {
-        dialog.classList.remove("show");
-      }
+      if (dialog) dialog.classList.remove("show");
     });
   }
 });
@@ -253,9 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (closeDialogBtn) {
     closeDialogBtn.addEventListener("click", () => {
       const dialog = document.getElementById("stats-dialog");
-      if (dialog) {
-        dialog.classList.remove("show");
-      }
+      if (dialog) dialog.classList.remove("show");
     });
   }
 });
