@@ -219,5 +219,44 @@ map.addControl(
   ),
   ControlsPosition.BOTTOM_LEFT
 );
+// #endregion
 
+// #region Dialog
+// Dialog info
+const openInfoDialog = () => {
+  const dialog = document.getElementById("info-dialog");
+  if (dialog) {
+    dialog.classList.add("show");
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const infoButton = document.querySelector(".header-button");
+  if (infoButton) {
+    infoButton.addEventListener("click", openInfoDialog);
+  }
+
+  const closeInfoDialogBtn = document.getElementById("close-info-dialog-btn");
+  if (closeInfoDialogBtn) {
+    closeInfoDialogBtn.addEventListener("click", () => {
+      const dialog = document.getElementById("info-dialog");
+      if (dialog) {
+        dialog.classList.remove("show");
+      }
+    });
+  }
+});
+
+// Dialog stats
+document.addEventListener("DOMContentLoaded", () => {
+  const closeDialogBtn = document.getElementById("close-dialog-btn");
+  if (closeDialogBtn) {
+    closeDialogBtn.addEventListener("click", () => {
+      const dialog = document.getElementById("stats-dialog");
+      if (dialog) {
+        dialog.classList.remove("show");
+      }
+    });
+  }
+});
 // #endregion

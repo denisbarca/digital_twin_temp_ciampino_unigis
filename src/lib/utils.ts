@@ -1,4 +1,4 @@
-import maplibregl, { LngLatLike } from "maplibre-gl";
+import maplibregl, { LngLatLike, Map } from "maplibre-gl";
 import { City } from "./models/city";
 import { sourceAddFeature } from "../layers/add-feature";
 import { layerAddFeature } from "../layers/add-feature";
@@ -93,14 +93,14 @@ export const addClickListener = (
         .setHTML(
           `${description}<br/><button id="add-feature-btn" style="margin-top: 10px; padding: 5px 10px; 
           background-color: #007bff; color: white; border: none; border-radius: 4px; 
-          cursor: pointer; font-size: 16px; float: right;">Add Feature</button>`
+          cursor: pointer; font-size: 16px; float: right;">Add Tree Feature</button>`
         )
         .addTo(map);
 
       // Add button click event
       const addButton = document.getElementById("add-feature-btn");
       if (addButton) {
-        addButton.addEventListener("click", () => {
+        addButton.addEventListener("click", async () => {
           const { lng, lat } = e.lngLat;
           if (!map.getSource(sourceAddFeature.id)) {
             map.addSource(sourceAddFeature.id, sourceAddFeature.args);
@@ -109,28 +109,10 @@ export const addClickListener = (
             map.addLayer(layerAddFeature);
           }
 
-          // Get current data
-          const source = map.getSource(
-            sourceAddFeature.id
-          ) as maplibregl.GeoJSONSource;
-          const currentData = source._data as GeoJSON.FeatureCollection;
+          createDataFeatures(map, lng, lat);
 
-          // Create a new feature
-          const newFeature: GeoJSON.Feature = {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [lng, lat]
-            },
-            properties: {}
-          };
+          // updateTemperatureData(map, lng, lat);
 
-          // Update the GeoJSON source
-          source.setData({
-            type: "FeatureCollection",
-            features: [...currentData.features, newFeature]
-          });
-          console.log(`Feature added at: ${lng}, ${lat}`);
           popup.remove();
         });
       }
@@ -138,3 +120,72 @@ export const addClickListener = (
   });
 };
 // #endregion
+
+const createDataFeatures = (map: Map, lng: number, lat: number) => {
+  // Get current data
+  const source = map.getSource(sourceAddFeature.id) as maplibregl.GeoJSONSource;
+  const currentData = source._data as GeoJSON.FeatureCollection;
+
+  // Create a new feature
+  const newFeature: GeoJSON.Feature = {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [lng, lat],
+          [lng + 0.000015, lat],
+          [lng + 0.000015, lat + 0.000015],
+          [lng, lat + 0.000015],
+          [lng, lat]
+        ]
+      ]
+    },
+    properties: {
+      height: 3
+    }
+  };
+
+  // Update the GeoJSON source
+  source.setData({
+    type: "FeatureCollection",
+    features: [...currentData.features, newFeature]
+  });
+};
+
+const updateTemperatureData = async (map: Map, lng: number, lat: number) => {
+  // Fetch the temperature data
+  const response = await fetch(
+    "http://localhost:8080/119be4c850f4b248b8257646951bb74e.geojson"
+  );
+  const temperatureData = (await response.json()) as GeoJSON.FeatureCollection;
+  temperatureData.features.forEach((feature: GeoJSON.Feature) => {
+    // Create a new temperature feature
+    const newTemperatureFeature: GeoJSON.Feature = {
+      type: "Feature",
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [lng, lat],
+            [lng + 0.000028, lat],
+            [lng + 0.000028, lat + 0.000028],
+            [lng, lat + 0.000028],
+            [lng, lat]
+          ]
+        ]
+      },
+      properties: {
+        DN: feature.properties ? feature.properties.DN - 1 : 0 // Example property, adjust as needed
+      }
+    };
+    // Add the new temperature feature to the temperature data
+    temperatureData.features.push(newTemperatureFeature);
+  });
+  // Update the temperature source with the modified data
+  const temperatureSource = map.getSource(
+    "ciampino-lst-source"
+  ) as maplibregl.GeoJSONSource;
+
+  temperatureSource.setData(temperatureData);
+};

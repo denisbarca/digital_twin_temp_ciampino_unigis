@@ -15,15 +15,17 @@ export const sourceAddFeature = {
   }
 };
 
-export const colorLayerCiampino = ["#ff0000"];
+export const colorLayerCiampino = ["#228B22"];
 export const defaultColorCiampino = colorLayerCiampino[0];
 
 export const layerAddFeature: AddLayerObject = {
   id: "click-layer",
-  type: "circle",
+  type: "fill-extrusion",
   source: sourceAddFeature.id,
   paint: {
-    "circle-color": defaultColorCiampino,
-    "circle-radius": 6
+    "fill-extrusion-color": defaultColorCiampino,
+    "fill-extrusion-height": 3,
+    "fill-extrusion-base": 0,
+    "fill-extrusion-opacity": 0.8
   }
 };

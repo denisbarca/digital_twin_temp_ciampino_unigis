@@ -23,43 +23,12 @@ export class LegendLayersControl implements IControl {
 
   // #region Methods implementd
   onAdd() {
-    this.container = document.createElement("div");
-    this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
-    this.container.style.backgroundColor = "white";
-    this.container.style.width = "270px";
-    this.container.style.padding = "10px";
-    this.container.style.borderRadius = "4px";
-    this.container.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)";
-    this.container.style.fontFamily =
-      "Open Sans, Helvetica Neue, Arial, Helvetica, sans-serif";
+    this.container = this._setMainContainer();
 
-    const titleContainer = document.createElement("div");
-    titleContainer.style.display = "flex";
-    titleContainer.style.justifyContent = "space-between";
-    titleContainer.style.alignItems = "center";
-
-    const title = document.createElement("h3");
-    title.innerText = this.title;
-    titleContainer.appendChild(title);
-
-    this.toggleIcon = document.createElement("span");
-    this.toggleIcon.innerHTML = "&#9660;";
-    this.toggleIcon.style.fontSize = "16px";
-    this.toggleIcon.style.cursor = "pointer";
-    this.toggleIcon.addEventListener("click", this.toggleList.bind(this));
-    titleContainer.appendChild(this.toggleIcon);
-
+    const titleContainer = this._setTitleContainer();
     this.container.appendChild(titleContainer);
 
-    this.listContainer = document.createElement("div");
-    this.listContainer.style.overflowY = "auto";
-    this.listContainer.style.maxHeight = "200px";
-    // this.listContainer.style.display = "flex";
-    // this.listContainer.style.flexDirection = "column";
-    this.listContainer.style.display = "none"; // Initially hide the list container
-    this.listContainer.style.flexDirection = "column";
-    this.listContainer.style.scrollbarWidth = "thin"; // Prettier scroll
-    this.listContainer.style.scrollbarColor = "#888 #e0e0e0"; // Prettier scroll
+    this.listContainer = this._setListContainer();
     this.container.appendChild(this.listContainer);
 
     window.addEventListener("resize", this._applyResponsiveStyles.bind(this));
@@ -86,10 +55,65 @@ export class LegendLayersControl implements IControl {
       }
     }
   }
-  // #endregion
 
-  // #region Utils
-  private renderItems() {
+  private _setMainContainer = (): HTMLElement => {
+    this.container = document.createElement("div");
+    this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
+    this.container.style.backgroundColor = "white";
+    this.container.style.width = "300px";
+    this.container.style.padding = "10px";
+    this.container.style.borderRadius = "4px";
+    this.container.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)";
+    this.container.style.fontFamily =
+      "Open Sans, Helvetica Neue, Arial, Helvetica, sans-serif";
+    return this.container;
+  };
+
+  private _setTitleContainer = (): HTMLDivElement => {
+    const titleContainer = document.createElement("div");
+    titleContainer.style.display = "flex";
+    titleContainer.style.justifyContent = "space-between";
+    titleContainer.style.alignItems = "center";
+
+    const title = document.createElement("h3");
+    title.innerText = this.title;
+    titleContainer.appendChild(title);
+
+    const iconsContainer = document.createElement("div");
+    iconsContainer.style.display = "flex";
+    iconsContainer.style.alignItems = "center";
+    iconsContainer.style.gap = "3px";
+
+    const statsButton = document.createElement("button");
+    statsButton.innerHTML = `<img src="assets/images/diagram.png" alt="Stats" width="16" height="16">`;
+    statsButton.style.fontSize = "16px";
+    statsButton.style.cursor = "pointer";
+    statsButton.addEventListener("click", this._openDialog.bind(this));
+    iconsContainer.appendChild(statsButton);
+
+    this.toggleIcon = document.createElement("span");
+    this.toggleIcon.innerHTML = "&#9660;";
+    this.toggleIcon.style.fontSize = "16px";
+    this.toggleIcon.style.cursor = "pointer";
+    this.toggleIcon.addEventListener("click", this._toggleList.bind(this));
+    iconsContainer.appendChild(this.toggleIcon);
+
+    titleContainer.appendChild(iconsContainer);
+    return titleContainer;
+  };
+
+  private _setListContainer = (): HTMLElement => {
+    this.listContainer = document.createElement("div");
+    this.listContainer.style.overflowY = "auto";
+    this.listContainer.style.maxHeight = "200px";
+    this.listContainer.style.display = "none"; // Initially hide the list container
+    this.listContainer.style.flexDirection = "column";
+    this.listContainer.style.scrollbarWidth = "thin"; // Prettier scroll
+    this.listContainer.style.scrollbarColor = "#888 #e0e0e0"; // Prettier scroll
+    return this.listContainer;
+  };
+
+  private _renderItems() {
     this.items.forEach((item) => {
       const row = document.createElement("div");
       row.style.display = "flex";
@@ -114,13 +138,15 @@ export class LegendLayersControl implements IControl {
       if (this.listContainer) this.listContainer.appendChild(row);
     });
   }
+  // #endregion
 
-  private toggleList() {
+  // #region Actions
+  private _toggleList() {
     if (this.listContainer) {
       this.isCollapsed = !this.isCollapsed;
       this.listContainer.style.display = this.isCollapsed ? "none" : "flex";
       if (!this.isCollapsed) {
-        this.renderItems();
+        this._renderItems();
         this.listContainer.style.display = "flex";
       } else {
         this.listContainer.innerHTML = "";
@@ -129,6 +155,11 @@ export class LegendLayersControl implements IControl {
       if (this.toggleIcon)
         this.toggleIcon.innerHTML = this.isCollapsed ? "&#9660;" : "&#9650;";
     }
+  }
+
+  private _openDialog() {
+    const dialog = document.getElementById("stats-dialog");
+    if (dialog) dialog.classList.add("show");
   }
   // #endregion
 }

@@ -19,7 +19,12 @@ export class HomeControl implements IControl {
     button.title = "Home";
     button.onclick = () => {
       if (this.map) {
-        this.map.flyTo({ center: latLong, zoom: ZOOM_LEVEL });
+        this.map.flyTo({
+          center: latLong,
+          zoom: ZOOM_LEVEL,
+          pitch: 0,
+          bearing: 0
+        });
       }
     };
     this.container.appendChild(button);

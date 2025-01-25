@@ -18,13 +18,24 @@ export const sourceCiampinoLST = {
 };
 
 export const colorLayerLST = [
-  "#0000FF",
-  "#00FFFF",
-  "#FFFF00",
-  "#FFA500",
-  "#FF0000",
-  "#8B0000"
-];
+  "000000", // Black
+  "040274",
+  "0502a3",
+  "0502ce",
+  "0602ff",
+  "307ef3",
+  "30c8e2",
+  "3be285",
+  "86e26f",
+  "3ae237",
+  "d6e21f",
+  "ffd611",
+  "ff8b13",
+  "ff500d",
+  "de0101",
+  "a71001",
+  "210300"
+].map((color) => `#${color}`);
 export const defaultColorLST = colorLayerLST[0];
 
 export const layerCiampinoLST: AddLayerObject = {
@@ -36,102 +47,102 @@ export const layerCiampinoLST: AddLayerObject = {
       "match",
       ["get", "DN"],
       0,
-      "#0000FF", // Blue
+      colorLayerLST[1],
       1,
-      "#0000FF", // Blue
+      colorLayerLST[1],
       2,
-      "#0000FF", // Blue
+      colorLayerLST[1],
       3,
-      "#0000FF", // Blue
+      colorLayerLST[1],
       4,
-      "#0000FF", // Blue
+      colorLayerLST[2],
       5,
-      "#0000FF", // Blue
+      colorLayerLST[2],
       6,
-      "#0000FF", // Blue
+      colorLayerLST[2],
       7,
-      "#0000FF", // Blue
+      colorLayerLST[3],
       8,
-      "#0000FF", // Blue
+      colorLayerLST[3],
       9,
-      "#0000FF", // Blue
+      colorLayerLST[3],
       10,
-      "#00FFFF", // Cyan
+      colorLayerLST[4],
       11,
-      "#00FFFF", // Cyan
+      colorLayerLST[4],
       12,
-      "#00FFFF", // Cyan
+      colorLayerLST[4],
       13,
-      "#00FFFF", // Cyan
+      colorLayerLST[5],
       14,
-      "#00FFFF", // Cyan
+      colorLayerLST[5],
       15,
-      "#00FFFF", // Cyan
+      colorLayerLST[5],
       16,
-      "#00FFFF", // Cyan
+      colorLayerLST[6],
       17,
-      "#00FFFF", // Cyan
+      colorLayerLST[6],
       18,
-      "#00FFFF", // Cyan
+      colorLayerLST[6],
       19,
-      "#00FFFF", // Cyan
+      colorLayerLST[7],
       20,
-      "#FFFF00", // Yellow
+      colorLayerLST[7],
       21,
-      "#FFFF00", // Yellow
+      colorLayerLST[7],
       22,
-      "#FFFF00", // Yellow
+      colorLayerLST[8],
       23,
-      "#FFFF00", // Yellow
+      colorLayerLST[8],
       24,
-      "#FFFF00", // Yellow
+      colorLayerLST[8],
       25,
-      "#FFFF00", // Yellow
+      colorLayerLST[9],
       26,
-      "#FFFF00", // Yellow
+      colorLayerLST[9],
       27,
-      "#FFFF00", // Yellow
+      colorLayerLST[9],
       28,
-      "#FFFF00", // Yellow
+      colorLayerLST[10],
       29,
-      "#FFFF00", // Yellow
+      colorLayerLST[10],
       30,
-      "#FFA500", // Orange
+      colorLayerLST[10],
       31,
-      "#FFA500", // Orange
+      colorLayerLST[11],
       32,
-      "#FFA500", // Orange
+      colorLayerLST[11],
       33,
-      "#FFA500", // Orange
+      colorLayerLST[11],
       34,
-      "#FFA500", // Orange
+      colorLayerLST[12],
       35,
-      "#FF0000", // Red
+      colorLayerLST[12],
       36,
-      "#FF0000", // Red
+      colorLayerLST[12],
       37,
-      "#FF0000", // Red
+      colorLayerLST[13],
       38,
-      "#FF0000", // Red
+      colorLayerLST[13],
       39,
-      "#FF0000", // Red
+      colorLayerLST[13],
       40,
-      "#800080", // Dark Purple
+      colorLayerLST[14],
       41,
-      "#800080", // Dark Purple
+      colorLayerLST[14],
       42,
-      "#800080", // Darker Purple
+      colorLayerLST[14],
       43,
-      "#800080", // Darker Purple
+      colorLayerLST[15],
       44,
-      "#800080", // Darker Purple
+      colorLayerLST[15],
       45,
-      "#800080", // Darker Purple
+      colorLayerLST[16],
       46,
-      "#800080", // Darker Purple
+      colorLayerLST[16],
       defaultColorLST
     ],
-    "fill-opacity": 0.4
+    "fill-opacity": 0.5
   }
 };
 
@@ -151,12 +162,22 @@ export const layerLegendCiampinoLST: LayerModel[] = [
 ];
 
 export const colorLSTMapping = {
-  "0 - 10°C": "#0000FF", // Blue
-  "10 - 20°C": "#00FFFF", // Cyan
-  "20 - 30°C": "#FFFF00", // Yellow
-  "30 - 35°C": "#B9958B", // Orange + 0.4 opacity
-  "35 - 40°C": "#BA548C", // Red + 0.4 opacity
-  "40 - 45°C": "#8553BE" // Darker purple + 0.4 opacity
+  "0 - 4°C": "#040274",
+  "4 - 7°C": "#0502a3",
+  "7 - 10°C": "#0502ce",
+  "10 - 13°C": "#0602ff",
+  "13 - 16°C": "#307ef3",
+  "16 - 19°C": "#30c8e2",
+  "19 - 22°C": "#3be285",
+  "22 - 25°C": "#86e26f",
+  "25 - 28°C": "#3ae237",
+  "28 - 31°C": "#d6e21f",
+  "31 - 34°C": "#ffd611",
+  "34 - 37°C": "#ff8b13",
+  "37 - 40°C": "#ff500d",
+  "40 - 43°C": "#de0101",
+  "43 - 45°C": "#a71001",
+  "45°C": "#210300"
 };
 
 // export const layerCiampinoLSTHexagons = async (
