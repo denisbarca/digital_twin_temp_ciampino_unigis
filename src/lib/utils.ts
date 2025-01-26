@@ -2,6 +2,10 @@ import maplibregl, { LngLatLike, Map } from "maplibre-gl";
 import { City } from "./models/city";
 import { sourceAddFeature } from "../layers/add-feature";
 import { layerAddFeature } from "../layers/add-feature";
+import { onStatsChartsLST } from "../components/dialog/stats-lst-dialog";
+import * as echarts from "echarts";
+import { ECBasicOption } from "echarts/types/dist/shared";
+import { onStatsChartsLanduse } from "../components/dialog/stats-landuse-dialog";
 
 // #region Ciampino config
 export const CIAMPINO_CITY: City = {
@@ -119,7 +123,6 @@ export const addClickListener = (
     }
   });
 };
-// #endregion
 
 const createDataFeatures = (map: Map, lng: number, lat: number) => {
   // Get current data
@@ -189,3 +192,63 @@ const updateTemperatureData = async (map: Map, lng: number, lat: number) => {
 
   temperatureSource.setData(temperatureData);
 };
+// #endregion
+
+// #region Managing dialog
+export const openDialog = (idDialog: string, dialogType: DialogType) => {
+  const dialog = document.getElementById(idDialog);
+  if (dialog) dialog.classList.add("show");
+  if (dialogType === DialogType.LST) onStatsChartsLST();
+  if (dialogType === DialogType.LANDUSE) onStatsChartsLanduse();
+};
+
+export const closeDialog = (idButton: string, idDialog: string) => {
+  document.addEventListener("DOMContentLoaded", () => {
+    const closeDialogBtn = document.getElementById(idButton);
+    if (closeDialogBtn) {
+      closeDialogBtn.addEventListener("click", () => {
+        const dialog = document.getElementById(idDialog);
+        if (dialog) dialog.classList.remove("show");
+      });
+    }
+  });
+};
+
+export type ChartDialog = ECBasicOption;
+
+export const setStatsChart = (idChart: string, option: ChartDialog) => {
+  // Initialize ECharts
+  const chartContainer = document.getElementById(idChart);
+  if (chartContainer) {
+    chartContainer.style.width = "80vw";
+    chartContainer.style.height = "80vh";
+    const chart = echarts.init(chartContainer);
+    // Use the specified chart options
+    chart.setOption(option);
+  }
+};
+
+export enum DialogType {
+  INFO = "info",
+  LST = "lst",
+  LANDUSE = "landuse"
+}
+
+// export const calculateFeatureAreas = (geojson: GeoJSON.FeatureCollection) => {
+//   const features = geojson.features;
+//   const areas = features.map((feature: GeoJSON.Feature) => {
+//     const area = turf.area(feature);
+//     return {
+//       ...feature,
+//       properties: {
+//         ...feature.properties,
+//         area: area // Add the calculated area to the feature properties
+//       }
+//     };
+//   });
+//   return {
+//     ...geojson,
+//     features: areas
+//   };
+// };
+// #endregion

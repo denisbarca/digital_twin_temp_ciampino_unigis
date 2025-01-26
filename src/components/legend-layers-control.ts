@@ -1,5 +1,6 @@
 import { Map, IControl } from "maplibre-gl";
 import { LayerModel } from "../lib/models/layer-model";
+import { DialogType, openDialog } from "../lib/utils";
 
 // Define the custom "Layers" control
 export class LegendLayersControl implements IControl {
@@ -9,15 +10,25 @@ export class LegendLayersControl implements IControl {
   private layers: LayerModel[] = [];
   private title: string;
   private items: { text: string; icon: string }[];
+  private dialogConfig: {
+    idButton: string;
+    idDialog: string;
+    dialogType: DialogType;
+  };
   private listContainer: HTMLElement | undefined;
   private toggleIcon: HTMLElement | undefined;
   private isCollapsed: boolean = true;
   // #endregion
 
   // #region Constructor
-  constructor(title: string, items: { text: string; icon: string }[]) {
+  constructor(
+    title: string,
+    items: { text: string; icon: string }[],
+    dialogConfig: { idButton: string; idDialog: string; dialogType: DialogType }
+  ) {
     this.title = title;
     this.items = items;
+    this.dialogConfig = dialogConfig;
   }
   // #endregion
 
@@ -86,9 +97,12 @@ export class LegendLayersControl implements IControl {
 
     const statsButton = document.createElement("button");
     statsButton.innerHTML = `<img src="assets/images/diagram.png" alt="Stats" width="16" height="16">`;
+    statsButton.id = "statsButton";
     statsButton.style.fontSize = "16px";
     statsButton.style.cursor = "pointer";
-    statsButton.addEventListener("click", this._openDialog.bind(this));
+    statsButton.addEventListener("click", () =>
+      openDialog(this.dialogConfig.idDialog, this.dialogConfig.dialogType)
+    );
     iconsContainer.appendChild(statsButton);
 
     this.toggleIcon = document.createElement("span");
@@ -155,11 +169,6 @@ export class LegendLayersControl implements IControl {
       if (this.toggleIcon)
         this.toggleIcon.innerHTML = this.isCollapsed ? "&#9660;" : "&#9650;";
     }
-  }
-
-  private _openDialog() {
-    const dialog = document.getElementById("stats-dialog");
-    if (dialog) dialog.classList.add("show");
   }
   // #endregion
 }

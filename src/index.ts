@@ -4,8 +4,11 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import {
   addClickListener,
   CIAMPINO_CITY,
+  closeDialog,
   ControlsPosition,
+  DialogType,
   mapMaxBoundsLngLat,
+  openDialog,
   ZOOM_LEVEL
 } from "./lib/utils";
 import { layerCiampino, sourceCiampino } from "./layers/ciampino-boundaries";
@@ -205,7 +208,12 @@ map.addControl(
 map.addControl(
   new LegendLayersControl(
     "Legend Land Surface Temperature",
-    Object.entries(colorLSTMapping).map(([text, icon]) => ({ text, icon }))
+    Object.entries(colorLSTMapping).map(([text, icon]) => ({ text, icon })),
+    {
+      idButton: "lst-btn",
+      idDialog: "stats-lst-dialog",
+      dialogType: DialogType.LST
+    }
   ),
   ControlsPosition.BOTTOM_LEFT
 );
@@ -215,7 +223,12 @@ map.addControl(
     Object.entries(colorCiampinoLanduseMapping).map(([text, icon]) => ({
       text,
       icon
-    }))
+    })),
+    {
+      idButton: "landuse-btn",
+      idDialog: "stats-landuse-dialog",
+      dialogType: DialogType.LANDUSE
+    }
   ),
   ControlsPosition.BOTTOM_LEFT
 );
@@ -223,33 +236,14 @@ map.addControl(
 
 // #region Dialog
 // Dialog info
-const openInfoDialog = () => {
-  const dialog = document.getElementById("info-dialog");
-  if (dialog) dialog.classList.add("show");
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-  const infoButton = document.getElementById("info-btn");
-
-  if (infoButton) infoButton.addEventListener("click", openInfoDialog);
-
-  const closeInfoDialogBtn = document.getElementById("close-info-dialog-btn");
-  if (closeInfoDialogBtn) {
-    closeInfoDialogBtn.addEventListener("click", () => {
-      const dialog = document.getElementById("info-dialog");
-      if (dialog) dialog.classList.remove("show");
-    });
-  }
+document.getElementById("info-btn")?.addEventListener("click", () => {
+  openDialog("info-dialog", DialogType.INFO);
 });
+closeDialog("close-info-dialog-btn", "info-dialog");
 
-// Dialog stats
-document.addEventListener("DOMContentLoaded", () => {
-  const closeDialogBtn = document.getElementById("close-dialog-btn");
-  if (closeDialogBtn) {
-    closeDialogBtn.addEventListener("click", () => {
-      const dialog = document.getElementById("stats-dialog");
-      if (dialog) dialog.classList.remove("show");
-    });
-  }
-});
+// Dialog LST stats
+closeDialog("close-lst-dialog-btn", "stats-lst-dialog");
+
+// Dialog Landuse stats
+closeDialog("close-landuse-dialog-btn", "stats-landuse-dialog");
 // #endregion
