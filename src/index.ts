@@ -81,6 +81,8 @@ const addSourcesAndLayers = () => {
 // #region Loading map
 map.on("load", async () => {
   addSourcesAndLayers();
+
+  openDialog("info-dialog", DialogType.INFO);
 });
 // #endregion
 

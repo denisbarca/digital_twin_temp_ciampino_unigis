@@ -233,22 +233,4 @@ export enum DialogType {
   LST = "lst",
   LANDUSE = "landuse"
 }
-
-// export const calculateFeatureAreas = (geojson: GeoJSON.FeatureCollection) => {
-//   const features = geojson.features;
-//   const areas = features.map((feature: GeoJSON.Feature) => {
-//     const area = turf.area(feature);
-//     return {
-//       ...feature,
-//       properties: {
-//         ...feature.properties,
-//         area: area // Add the calculated area to the feature properties
-//       }
-//     };
-//   });
-//   return {
-//     ...geojson,
-//     features: areas
-//   };
-// };
 // #endregion
