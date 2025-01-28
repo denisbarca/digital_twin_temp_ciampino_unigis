@@ -41,8 +41,6 @@ export enum ControlsPosition {
   BOTTOM_RIGHT = "bottom-right"
 }
 
-export const MAPTILER_API_KEY = "7hoRtEm5V28kPFvvHRho";
-
 const mapAreaMaxBounds = [
   [12.487787618563885, 41.84751040169695],
   [12.70894385200748, 41.845846295457335],

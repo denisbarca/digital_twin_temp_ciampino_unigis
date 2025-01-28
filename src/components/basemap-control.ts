@@ -1,10 +1,10 @@
 import { Map, IControl } from "maplibre-gl";
 import { Basemap } from "../lib/models/basemap";
-import { MAPTILER_API_KEY } from "../lib/utils";
 import basicV2Image from "../assets/images/basic-v2.png";
 import basicV2DarkImage from "../assets/images/basic-v2-dark.png";
 import hybridImage from "../assets/images/hybrid.png";
 import openstreetmapImage from "../assets/images/openstreetmap.png";
+import { MAPTILER_API_KEY } from "../config/config";
 
 const basicV2: Basemap = {
   name: "BasicV2",

@@ -3,9 +3,9 @@ import {
   CanvasSourceSpecification,
   SourceSpecification
 } from "maplibre-gl/dist/maplibre-gl";
-import { MAPTILER_API_KEY } from "../lib/utils";
 import { LayerModel } from "../lib/models/layer-model";
 import { mapLayerHeight, mapLayerWidth } from "./layers-config";
+import { MAPTILER_API_KEY } from "../config/config";
 // import ciampinoBoundaries from "../assets/layers/ciampino_boundaries.geojson";
 
 export const sourceBuildings3D = {
