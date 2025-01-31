@@ -50,7 +50,6 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve",
-    "deploy": "gh-pages -d dist"
+    "dev": "webpack serve --mode development"
   }
 }

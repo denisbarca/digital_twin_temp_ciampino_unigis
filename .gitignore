@@ -6,4 +6,4 @@ config/
 # Local Netlify folder
 .netlify
 
-!dist/
+dist/
