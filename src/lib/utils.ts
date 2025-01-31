@@ -78,7 +78,8 @@ const popup = new maplibregl.Popup({
 export const addClickListener = (
   map: maplibregl.Map,
   layerId: string,
-  getDescription: (feature: maplibregl.MapGeoJSONFeature) => string
+  getDescription: (feature: maplibregl.MapGeoJSONFeature) => string,
+  hasAddFeatureButton: boolean
 ) => {
   map.on("click", layerId, (e) => {
     // Get the features at the point of click
@@ -93,9 +94,11 @@ export const addClickListener = (
       popup
         .setLngLat({ lng: e.lngLat.lng, lat: e.lngLat.lat })
         .setHTML(
-          `${description}<br/><button id="add-feature-btn" style="margin-top: 10px; padding: 5px 10px; 
+          hasAddFeatureButton
+            ? `${description}<br/><button id="add-feature-btn" style="margin-top: 10px; padding: 5px 10px; 
           background-color: #007bff; color: white; border: none; border-radius: 4px; 
           cursor: pointer; font-size: 16px; float: right;">Add Tree Feature</button>`
+            : description
         )
         .addTo(map);
 

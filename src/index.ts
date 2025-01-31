@@ -110,6 +110,18 @@ map.on("zoom", () => {
 // #endregion
 
 // #region Interaction with map for popup
+// Add click event listener for temperature layer
+addClickListener(
+  map,
+  "ciampino-lst",
+  (feature) => `
+  <div style="font-size: 18px; margin: 10px;">
+    <strong>Temperature:</strong> ${feature.properties.DN.toFixed(2)}<br>
+  </div>
+`,
+  true
+);
+
 // Add click event listener for buildings layer
 addClickListener(
   map,
@@ -119,7 +131,8 @@ addClickListener(
     <strong>Building ID:</strong> ${feature.id}<br>
     <strong>Height:</strong> ${feature.properties.render_height} meters
   </div>
-`
+`,
+  false
 );
 addClickListener(
   map,
@@ -129,18 +142,8 @@ addClickListener(
     <strong>Building ID:</strong> ${feature.id}<br>
     <strong>Height:</strong> ${feature.properties.render_height} meters
   </div>
-`
-);
-
-// Add click event listener for temperature layer
-addClickListener(
-  map,
-  "ciampino-lst",
-  (feature) => `
-  <div style="font-size: 18px; margin: 10px;">
-    <strong>Temperature:</strong> ${feature.properties.DN.toFixed(2)}<br>
-  </div>
-`
+`,
+  false
 );
 
 // Add click event listener for trees layer
@@ -151,7 +154,8 @@ addClickListener(
   <div style="font-size: 18px; margin: 10px;">
     <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
   </div>
-`
+`,
+  false
 );
 addClickListener(
   map,
@@ -160,7 +164,8 @@ addClickListener(
   <div style="font-size: 18px; margin: 10px;">
     <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
   </div>
-`
+`,
+  false
 );
 // #endregion
 
