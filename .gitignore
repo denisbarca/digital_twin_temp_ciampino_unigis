@@ -3,3 +3,7 @@ node_modules/
 assets/
 
 config/
+# Local Netlify folder
+.netlify
+
+!dist/

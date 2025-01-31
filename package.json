@@ -49,8 +49,8 @@
     "webpack-dev-server": "^5.2.0"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "start": "webpack serve",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   }
 }
