@@ -49,6 +49,12 @@ const geocoderApi: MaplibreGeocoderApi = {
       type: "FeatureCollection",
       features
     } as MaplibreGeocoderFeatureResults;
+  },
+  reverseGeocode: async () => {
+    return {
+      type: "FeatureCollection",
+      features: []
+    } as MaplibreGeocoderFeatureResults;
   }
 };
 
