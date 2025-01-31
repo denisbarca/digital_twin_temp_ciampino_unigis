@@ -134,29 +134,29 @@ addClickListener(
 `,
   false
 );
-addClickListener(
-  map,
-  "2d-buildings",
-  (feature) => `
-  <div style="font-size: 18px; margin: 10px;">
-    <strong>Building ID:</strong> ${feature.id}<br>
-    <strong>Height:</strong> ${feature.properties.render_height} meters
-  </div>
-`,
-  false
-);
+// addClickListener(
+//   map,
+//   "2d-buildings",
+//   (feature) => `
+//   <div style="font-size: 18px; margin: 10px;">
+//     <strong>Building ID:</strong> ${feature.id}<br>
+//     <strong>Height:</strong> ${feature.properties.render_height} meters
+//   </div>
+// `,
+//   false
+// );
 
 // Add click event listener for trees layer
-addClickListener(
-  map,
-  "ciampino-trees-2d",
-  (feature) => `
-  <div style="font-size: 18px; margin: 10px;">
-    <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
-  </div>
-`,
-  false
-);
+// addClickListener(
+//   map,
+//   "ciampino-trees-2d",
+//   (feature) => `
+//   <div style="font-size: 18px; margin: 10px;">
+//     <strong>Tree ID:</strong> ${feature.id ?? feature.properties.fid}<br>
+//   </div>
+// `,
+//   false
+// );
 addClickListener(
   map,
   "ciampino-trees-3d",
