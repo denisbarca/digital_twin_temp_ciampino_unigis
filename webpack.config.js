@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "./"
+    publicPath: "/digital_twin_temp_ciampino_unigis/"
   },
   module: {
     rules: [
