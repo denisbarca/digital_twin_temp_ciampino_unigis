@@ -6,9 +6,7 @@ module.exports = {
   entry: "./src/index.ts",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
-    clean: true
+    path: path.resolve(__dirname, "dist")
   },
   module: {
     rules: [
@@ -45,7 +43,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: path.resolve(__dirname, "./src/index.html"),
       filename: "index.html"
     }),
     new CopyWebpackPlugin({
@@ -56,12 +54,14 @@ module.exports = {
     })
   ],
   devServer: {
-    static: "./dist",
+    static: {
+      directory: path.resolve(__dirname, "./dist")
+    },
     compress: true,
     port: 8080,
     hot: false, // Disable HMR
     liveReload: false, // Disable live reloading
     open: true
   },
-  mode: "production"
+  mode: "development"
 };
