@@ -1,7 +1,7 @@
 import { Map, IControl } from "maplibre-gl";
 import { Basemap } from "../lib/models/basemap";
 import basicV2Image from "../assets/images/basic-v2.png";
-import basicV2DarkImage from "../assets/images/basic-v2-dark.png";
+import basicV2DarkImage from "../assets/images/basic-v2dark.png";
 import hybridImage from "../assets/images/hybrid.png";
 import openstreetmapImage from "../assets/images/openstreetmap.png";
 import { MAPTILER_API_KEY } from "../config/config";
