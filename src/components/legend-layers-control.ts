@@ -96,13 +96,19 @@ export class LegendLayersControl implements IControl {
     iconsContainer.style.gap = "3px";
 
     const statsButton = document.createElement("button");
-    statsButton.innerHTML = `<img src="assets/images/diagram.png" alt="Stats" width="16" height="16">`;
     statsButton.id = "statsButton";
     statsButton.style.fontSize = "16px";
     statsButton.style.cursor = "pointer";
     statsButton.addEventListener("click", () =>
       openDialog(this.dialogConfig.idDialog, this.dialogConfig.dialogType)
     );
+    const statsIcon = document.createElement("img");
+    statsIcon.src = "assets/images/diagram.png";
+    statsIcon.alt = "Stats";
+    statsIcon.width = 16;
+    statsIcon.height = 16;
+
+    statsButton.appendChild(statsIcon);
     iconsContainer.appendChild(statsButton);
 
     this.toggleIcon = document.createElement("span");
