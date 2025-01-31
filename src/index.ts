@@ -10,38 +10,35 @@ import {
   mapMaxBoundsLngLat,
   openDialog,
   ZOOM_LEVEL
-} from "./src/lib/utils";
-import {
-  layerCiampino,
-  sourceCiampino
-} from "./src/layers/ciampino-boundaries";
-import { geocoder } from "./src/components/geocoder-api-control";
+} from "./lib/utils";
+import { layerCiampino, sourceCiampino } from "./layers/ciampino-boundaries";
+import { geocoder } from "./components/geocoder-api-control";
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
-import { HomeControl } from "./src/components/home-custom-control";
-import { LayersControl } from "./src/components/layers-custom-control";
-import { baseLayers, BasemapControl } from "./src/components/basemap-control";
+import { HomeControl } from "./components/home-custom-control";
+import { LayersControl } from "./components/layers-custom-control";
+import { baseLayers, BasemapControl } from "./components/basemap-control";
 import {
   layerBuildings2D,
   layerBuildings3D,
   sourceBuildings3D
-} from "./src/layers/ciampino-buildings-3d";
+} from "./layers/ciampino-buildings-3d";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import {
   layerCiampinoTrees,
   sourceCiampinoTrees
-} from "./src/layers/ciampino-trees";
-import { layerTrees3D } from "./src/layers/ciampino-trees-3d";
+} from "./layers/ciampino-trees";
+import { layerTrees3D } from "./layers/ciampino-trees-3d";
 import {
   colorLSTMapping,
   layerCiampinoLST,
   sourceCiampinoLST
-} from "./src/layers/ciampino-lst";
+} from "./layers/ciampino-lst";
 import {
   colorCiampinoLanduseMapping,
   layerCiampinoLanduse,
   sourceCiampinoLanduse
-} from "./src/layers/ciampino-landuse";
-import { LegendLayersControl } from "./src/components/legend-layers-control";
+} from "./layers/ciampino-landuse";
+import { LegendLayersControl } from "./components/legend-layers-control";
 
 // #region Map initialization
 export const initialBasemap = baseLayers[0];

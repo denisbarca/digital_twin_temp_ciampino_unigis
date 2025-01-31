@@ -3,11 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: "./index.ts",
+  entry: "./src/index.ts",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/digital_twin_temp_ciampino_unigis/"
+    // publicPath: "/digital_twin_temp_ciampino_unigis/",
+    clean: true
   },
   module: {
     rules: [
@@ -44,7 +45,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./index.html"),
+      template: "./src/index.html",
       filename: "index.html"
     }),
     new CopyWebpackPlugin({
@@ -55,14 +56,12 @@ module.exports = {
     })
   ],
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, "./dist")
-    },
+    static: "./dist",
     compress: true,
     port: 8080,
     hot: false, // Disable HMR
     liveReload: false, // Disable live reloading
     open: true
   },
-  mode: "development"
+  mode: "production"
 };
